@@ -1,12 +1,14 @@
 import React from 'react';
-import './App.css';
+import { LoginPage } from './views/auth/login/LoginPage';
+import { RegistrationPage } from './views/auth/registration/RegistrationPage';
+import { NotFoundPage } from './views/notFoundPage/NotFoundPage';
+import { routes } from './core/router/routes';
+import { BrowserRouter } from 'react-router-dom';
 
-function App() {
+export const App = () => {
   return (
-    <div className="App">
-      <h1>Hi</h1>
-    </div>
+    <BrowserRouter>
+      {routes}
+    </BrowserRouter>
   );
-}
-
-export default App;
+};
