@@ -13,7 +13,7 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Link, chakra, MenuItem, MenuList, MenuButton, Menu,
+  chakra,
 } from '@chakra-ui/react';
 import { Path } from '../../../core/router/paths';
 import { useState } from 'react';
@@ -23,6 +23,7 @@ import { Form, Formik } from 'formik';
 import { SelectField } from '../../../components/SelectField';
 import { Roles } from '../../../utils/roles';
 import { RegistrationFormValues } from './types';
+import { TextInput } from '../../../components/TextInput';
 
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -69,37 +70,45 @@ export const RegistrationPage = () => {
               <Stack spacing={4}>
                 <HStack>
                   <Box>
-                    <FormControl isRequired>
-                      <FormLabel>First Name</FormLabel>
-                      <Input type="text" id="firstName" />
-                    </FormControl>
+                    <TextInput
+                      isRequired
+                      name='firstName'
+                      label='First Name'
+                    />
                   </Box>
                   <Box>
-                    <FormControl>
-                      <FormLabel>Last Name</FormLabel>
-                      <Input type="text" name="lastName" />
-                    </FormControl>
+                   <TextInput
+                    name='lastName'
+                    label='Last Name'
+                   />
                   </Box>
                 </HStack>
-                <FormControl isRequired>
-                  <FormLabel>Login</FormLabel>
-                  <Input type="text" id="login" />
-                </FormControl>
-                <FormControl isRequired>
-                  <FormLabel htmlFor="password">Password</FormLabel>
-                  <InputGroup>
-                    <Input type={showPassword ? 'text' : 'password'} id="password" />
-                    <InputRightElement h={'full'}>
-                      <Button
-                        variant={'ghost'}
-                        onClick={() =>
-                          setShowPassword((showPassword) => !showPassword)
-                        }>
-                        {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                      </Button>
-                    </InputRightElement>
-                  </InputGroup>
-                </FormControl>
+                <TextInput
+                  isRequired
+                  name='login'
+                  label='Login'
+                />
+                <TextInput
+                  isRequired
+                  name='password'
+                  type='password'
+                  label='Password'
+                />
+                {/*<FormControl isRequired>*/}
+                {/*  <FormLabel htmlFor="password">Password</FormLabel>*/}
+                {/*  <InputGroup>*/}
+                {/*    <Input type={showPassword ? 'text' : 'password'} id="password" />*/}
+                {/*    <InputRightElement h={'full'}>*/}
+                {/*      <Button*/}
+                {/*        variant={'ghost'}*/}
+                {/*        onClick={() =>*/}
+                {/*          setShowPassword((showPassword) => !showPassword)*/}
+                {/*        }>*/}
+                {/*        {showPassword ? <ViewIcon /> : <ViewOffIcon />}*/}
+                {/*      </Button>*/}
+                {/*    </InputRightElement>*/}
+                {/*  </InputGroup>*/}
+                {/*</FormControl>*/}
                   <SelectField
                     name='role'
                     label='Role'
