@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Flex,
   Box,
@@ -24,6 +24,7 @@ import { SelectField } from '../../../components/SelectField';
 import { Roles } from '../../../utils/roles';
 import { RegistrationFormValues } from './types';
 import { TextInput } from '../../../components/TextInput';
+import { getSynagoguesApi } from '../../../api/auth/api';
 
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -32,9 +33,18 @@ const options = [
 ]
 
 export const RegistrationPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [synagogues, setSynagogues] = useState([]);
   const bg1 = useColorModeValue('gray.50', 'gray.800');
   const bg2 = useColorModeValue('white', 'gray.700');
+
+  async function getData() {
+    const res = await getSynagoguesApi();
+    setSynagogues(res);
+  }
+
+  useEffect(() => {
+    getData();
+  }, [])
 
   return (
     <Formik<RegistrationFormValues>
@@ -45,7 +55,7 @@ export const RegistrationPage = () => {
         login: '',
         password: '',
         role:'',
-        synagogue: '',
+        synagogue: 0,
       }}
       onSubmit={(values) => console.log(values)}
     >
@@ -54,19 +64,21 @@ export const RegistrationPage = () => {
         minH={'100vh'}
         align={'center'}
         justify={'center'}
-        bg={bg1}>
+        bg={bg1}
+      >
         <Stack spacing={8} mx={'auto'} maxW={'lg'} pb="40px" px={6}>
-          <Stack align={'center'}>
+          <Stack align={'center'} mb="8px">
             <Heading fontSize={'4xl'} textAlign={'center'}>
               Sign up
             </Heading>
           </Stack>
-          <Form id="registration-page-form">
+          <Form id="registration-page-form" style={{ margin: 0 }}>
             <Box
               rounded={'lg'}
               bg={bg2}
               boxShadow={'lg'}
-              p={8}>
+              p="25px 26px"
+            >
               <Stack spacing={4}>
                 <HStack>
                   <Box>
@@ -94,21 +106,6 @@ export const RegistrationPage = () => {
                   type='password'
                   label='Password'
                 />
-                {/*<FormControl isRequired>*/}
-                {/*  <FormLabel htmlFor="password">Password</FormLabel>*/}
-                {/*  <InputGroup>*/}
-                {/*    <Input type={showPassword ? 'text' : 'password'} id="password" />*/}
-                {/*    <InputRightElement h={'full'}>*/}
-                {/*      <Button*/}
-                {/*        variant={'ghost'}*/}
-                {/*        onClick={() =>*/}
-                {/*          setShowPassword((showPassword) => !showPassword)*/}
-                {/*        }>*/}
-                {/*        {showPassword ? <ViewIcon /> : <ViewOffIcon />}*/}
-                {/*      </Button>*/}
-                {/*    </InputRightElement>*/}
-                {/*  </InputGroup>*/}
-                {/*</FormControl>*/}
                   <SelectField
                     name='role'
                     label='Role'
@@ -124,9 +121,17 @@ export const RegistrationPage = () => {
                       },
                     ]}
                   />
-                <FormControl id="synagogue" isRequired>
-                  <FormLabel>Synagogue</FormLabel>
-                </FormControl>
+                <SelectField
+                  name='synagogue'
+                  label='Synagogue'
+                  isRequired
+                  options={synagogues.map((item: any) => ({
+                    id: item.id,
+                    value: item.name,
+                    label: item.name,
+                  }))
+                  }
+                />
                 <Stack spacing={10} pt={2}>
                   <Button
                     type="submit"

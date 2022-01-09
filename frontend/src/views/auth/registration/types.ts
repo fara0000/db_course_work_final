@@ -4,5 +4,5 @@ export interface RegistrationFormValues {
   login: string;
   password: string;
   role: string;
-  synagogue: string;
+  synagogue: number;
 }
