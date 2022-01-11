@@ -12,8 +12,8 @@ public class Synagogue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotNull
-    @Size(max = 50)
+    @Size(min = 4, max = 50)
+    @Column(nullable = false, unique = true)
     @NotEmpty
     private String name;
     @NotNull
