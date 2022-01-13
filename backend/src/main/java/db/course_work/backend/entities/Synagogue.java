@@ -15,7 +15,7 @@ public class Synagogue {
     private Integer id;
 
     @Size(min = 4, max = 30)
-    @Column(nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     @NotEmpty
     private String name;
 

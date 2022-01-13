@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class SynagogueService {
     private final SynagogueRepository synagogueRepo;
-    @Autowired
     SynagogueService(SynagogueRepository synagogueRepo) {
         this.synagogueRepo = synagogueRepo;
     }

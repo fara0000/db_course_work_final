@@ -125,11 +125,11 @@ export const RegistrationPage = () => {
                   name='synagogue'
                   label='Synagogue'
                   isRequired
-                  options={synagogues.map((item: any) => ({
+                  options={synagogues?.map((item: any) => ({
                     id: item.id,
                     value: item.name,
                     label: item.name,
-                  }))
+                  })) || []
                   }
                 />
                 <Stack spacing={10} pt={2}>
