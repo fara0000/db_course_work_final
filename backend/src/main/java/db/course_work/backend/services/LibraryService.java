@@ -56,6 +56,7 @@ public class LibraryService {
         book.setBorrower(memberRepository.findById(memberId).orElseThrow(
                 UserNotFoundException::new
         ));
+        bookRepository.save(book);
         return Optional.of(book);
     }
 }
