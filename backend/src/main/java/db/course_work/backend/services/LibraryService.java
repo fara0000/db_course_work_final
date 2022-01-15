@@ -15,40 +15,39 @@ import java.util.Optional;
 public class LibraryService {
     private final BookRepository bookRepository;
     private final MemberRepository memberRepository;
+    private final SynagogueService synagogueService;
 
-    public LibraryService(BookRepository bookRepository, MemberRepository memberRepository) {
+    public LibraryService(BookRepository bookRepository, MemberRepository memberRepository, SynagogueService synagogueService) {
         this.bookRepository = bookRepository;
         this.memberRepository = memberRepository;
-    }
-
-    private Member getMember(long memberId) {
-        Optional<Member> memberOptional = memberRepository.findById(memberId);
-        if (memberOptional.isEmpty()) throw new UserNotFoundException();
-        return memberOptional.get();
+        this.synagogueService = synagogueService;
     }
 
     private long getLibraryId(Member member) {
         return member.getSynagogue().getLibrary().getId();
     }
 
+    @Transactional
     public List<Book> getBooks(long memberId) {
-        Member member = getMember(memberId);
+        Member member = synagogueService.getMember(memberId);
         return bookRepository.findByLibraryId(getLibraryId(member));
     }
 
+    @Transactional
     public List<Book> getAvailableBooks(long memberId) {
-        Member member = getMember(memberId);
+        Member member = synagogueService.getMember(memberId);
         return bookRepository.findByLibraryIdAndAvailableTrue(getLibraryId(member));
     }
 
+    @Transactional
     public List<Book> getMemberBooks(long memberId) {
-        Member member = getMember(memberId);
+        Member member = synagogueService.getMember(memberId);
         return bookRepository.findByLibraryIdAndBorrowerId(getLibraryId(member), memberId);
     }
 
     @Transactional
     public Optional<Book> takeBook(long memberId, long bookId) {
-        Member member = getMember(memberId);
+        Member member = synagogueService.getMember(memberId);
         Optional<Book> optionalBook = bookRepository.findByIdAndLibraryId(bookId, getLibraryId(member));
         if (optionalBook.isEmpty()) return Optional.empty();
         Book book = optionalBook.get();
@@ -62,7 +61,7 @@ public class LibraryService {
 
     @Transactional
     public boolean returnBook(long memberId, long bookId) {
-        Member member = getMember(memberId);
+        Member member = synagogueService.getMember(memberId);
         Optional<Book> optionalBook = bookRepository.findByIdAndLibraryId(bookId, getLibraryId(member));
         if (optionalBook.isEmpty()) return false;
         Book book = optionalBook.get();

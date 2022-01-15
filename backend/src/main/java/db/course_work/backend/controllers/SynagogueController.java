@@ -1,8 +1,7 @@
 package db.course_work.backend.controllers;
 
-import db.course_work.backend.dto.PremiseDto;
-import db.course_work.backend.dto.AttributeDto;
-import db.course_work.backend.dto.SynagogueDto;
+import db.course_work.backend.dto.*;
+import db.course_work.backend.entities.Member;
 import db.course_work.backend.entities.Premise;
 import db.course_work.backend.entities.Synagogue;
 import db.course_work.backend.entities.SynagogueAttribute;
@@ -51,6 +50,21 @@ public class SynagogueController {
                 .build();
     }
 
+    private MemberDto convertMemberToDto(Member member) {
+        return MemberDto.builder()
+                .id(member.getId())
+                .name(member.getName())
+                .surname(member.getSurname())
+                .role(member.getRole())
+                .synagogue(member.getSynagogue())
+                .events(member.getEvents())
+                .build();
+    }
+
+    private MemberList convertMembersToDto(List<Member> members) {
+        return new MemberList(members.stream().map(this::convertMemberToDto).collect(Collectors.toList()));
+    }
+
 
     public SynagogueController(SynagogueService synagogueService) {
         this.synagogueService = synagogueService;
@@ -61,5 +75,11 @@ public class SynagogueController {
         Optional<Synagogue> synagogueOptional = synagogueService.getMemberSynagogue(1);
         if (synagogueOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal error");
         return convertSynagogueToDto(synagogueOptional.get());
+    }
+
+    @GetMapping("/my/members")
+    public MemberList getSynagogueMembers() {
+        List<Member> members = synagogueService.getSynagogueMembers(1);
+        return convertMembersToDto(members);
     }
 }
