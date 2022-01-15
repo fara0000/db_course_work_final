@@ -23,7 +23,7 @@ public class Tradition {
     private String description;
     @ManyToMany
     @JoinTable(
-            name = "attribute_tradition",
+            name = "tradition_attribute",
             joinColumns = @JoinColumn(name = "tradition_id"),
             inverseJoinColumns = @JoinColumn(name = "attribute_id")
     )

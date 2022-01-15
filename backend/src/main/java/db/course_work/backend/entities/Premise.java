@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Data
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Premise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,5 +21,6 @@ public class Premise {
     @NotEmpty
     private String name;
     @ManyToOne
+    @JoinColumn(name = "synagogue_id")
     private Synagogue synagogue;
 }

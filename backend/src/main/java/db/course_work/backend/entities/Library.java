@@ -1,20 +1,22 @@
 package db.course_work.backend.entities;
 
+import lombok.AccessLevel;
 import lombok.Data;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Data
-public class Library {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Premise premise;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "library")
-    private List<Book> books;
+@PrimaryKeyJoinColumn(name = "id")
+public class Library extends Premise {
+    @OneToOne
+    @JoinColumn(name = "synagogue_id")
+    @Setter(AccessLevel.NONE)
+    private Synagogue housedInSynagogue;
+
+    public void setHousedInSynagogue(Synagogue housedInSynagogue) {
+        this.housedInSynagogue = housedInSynagogue;
+        super.setSynagogue(housedInSynagogue);
+    }
 }

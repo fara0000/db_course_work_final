@@ -1,6 +1,7 @@
 package db.course_work.backend.entities;
 
 import lombok.Data;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -12,6 +13,7 @@ public class Synagogue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotNull
     @Size(min = 4, max = 50)
     @Column(nullable = false, unique = true)
     @NotEmpty
@@ -20,8 +22,12 @@ public class Synagogue {
     @Min(value = 1)
     @Max(value = 100000)
     private Float size;
+    @Size(max = 50)
+    private String architectureStyle;
     @ManyToOne
     private Tradition tradition;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "synagogue")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "synagogue", orphanRemoval = true)
     private List<Premise> premises;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "housedInSynagogue")
+    private Library library;
 }

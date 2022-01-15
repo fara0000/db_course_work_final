@@ -1,6 +1,9 @@
 package db.course_work.backend.entities;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -21,9 +24,20 @@ public class Book {
     @Size(max = 250)
     @NotEmpty
     private String description;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "library_id", nullable = false)
     private Library library;
-    @ManyToOne
+    @Setter(value= AccessLevel.NONE)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "borrower_id")
     private Member borrower;
-    private boolean isAvailable;
+    @Setter(value= AccessLevel.NONE)
+    @Formula("borrower_id IS NULL")
+    private boolean available;
+
+
+    public void setBorrower(Member borrower) {
+        this.borrower = borrower;
+        this.available = borrower == null;
+    }
 }
