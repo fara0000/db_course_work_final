@@ -24,15 +24,15 @@ import { SelectField } from '../../../components/SelectField';
 import { Roles } from '../../../utils/roles';
 import { RegistrationFormValues } from './types';
 import { TextInput } from '../../../components/TextInput';
-import { getSynagoguesApi } from '../../../api/auth/api';
+import { getSynagoguesApi, saveUserApi } from '../../../api/auth/api';
+import { filterSynagogues } from './util';
+import { observable } from 'mobx';
+import authStore from '../../../store/AuthStore';
+import { observer } from 'mobx-react-lite';
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-]
+// TODO: make mobx asynchronous
 
-export const RegistrationPage = () => {
+export const RegistrationPage = observer(() => {
   const [synagogues, setSynagogues] = useState([]);
   const bg1 = useColorModeValue('gray.50', 'gray.800');
   const bg2 = useColorModeValue('white', 'gray.700');
@@ -43,6 +43,9 @@ export const RegistrationPage = () => {
   }
 
   useEffect(() => {
+    // TODO: make mobx fetch data on componentDidMount
+    // authStore.getSynagogues();
+
     getData();
   }, [])
 
@@ -50,14 +53,20 @@ export const RegistrationPage = () => {
     <Formik<RegistrationFormValues>
       enableReinitialize
       initialValues={{
-        firstName: '',
-        lastName: '',
+        name: '',
+        surname: '',
         login: '',
         password: '',
         role:'',
-        synagogue: 0,
+        synagogue: '',
       }}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={(values) => {
+        const selectedId = filterSynagogues(values.synagogue, synagogues);
+
+        const response = authStore.saveMember(values, selectedId);
+
+        console.log(response);
+      }}
     >
       {({ isSubmitting, dirty, isValid, values }) => (
       <Flex
@@ -84,13 +93,13 @@ export const RegistrationPage = () => {
                   <Box>
                     <TextInput
                       isRequired
-                      name='firstName'
+                      name='name'
                       label='First Name'
                     />
                   </Box>
                   <Box>
                    <TextInput
-                    name='lastName'
+                    name='surname'
                     label='Last Name'
                    />
                   </Box>
@@ -118,6 +127,10 @@ export const RegistrationPage = () => {
                       {
                         label: Roles.общинник,
                         value: Roles.общинник,
+                      },
+                      {
+                        label: Roles.хазан,
+                        value: Roles.хазан,
                       },
                     ]}
                   />
@@ -164,4 +177,4 @@ export const RegistrationPage = () => {
       )}
     </Formik>
   );
-}
+})

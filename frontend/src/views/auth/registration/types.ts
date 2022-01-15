@@ -1,8 +1,8 @@
 export interface RegistrationFormValues {
-  firstName: string;
-  lastName?: string;
+  name: string;
+  surname?: string;
   login: string;
   password: string;
   role: string;
-  synagogue: number;
+  synagogue: string;
 }

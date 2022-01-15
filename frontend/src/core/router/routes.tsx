@@ -12,7 +12,9 @@ export const routes: React.ReactNode = (
   <Switch>
     <Route path={Path.LOGIN} exact component={LoginPage} />
 
-    <Route path={Path.REGISTER} exact component={RegistrationPage} />
+    <Route path={Path.REGISTER} exact>
+      <RegistrationPage />
+    </Route>
 
     <Route path={Path.NOTFOUND} component={NotFoundPage} />
 

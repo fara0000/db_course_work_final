@@ -17,19 +17,21 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import { Path } from '../../../core/router/paths';
 
+const wikiSynagogueUrl = 'https://en.wikipedia.org/wiki/Synagogue';
+
 export const LoginPage = ()  => (
     <Flex
+      bg={useColorModeValue('gray.50', 'gray.800')}
       minH={'100vh'}
       align={'center'}
       justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}
       userSelect={'none'}
     >
       <Stack spacing={8} mx={'auto'} maxW={'lg'} w="450px" pb="45px" px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Sign in to your account</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our <Link color={'blue.400'}>Synagogue</Link>
+            to enjoy all of our <Link color={'blue.400'} href={wikiSynagogueUrl} target="_blank">Synagogue</Link>
           </Text>
         </Stack>
         <Box
