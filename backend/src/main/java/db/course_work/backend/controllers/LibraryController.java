@@ -63,4 +63,12 @@ public class LibraryController {
         }
         return convertBookToDto(bookOptional.get());
     }
+
+    @PostMapping(value = "/{bookId}/return")
+    @ResponseBody
+    public String returnBook(@PathVariable("bookId") long bookId) {
+        boolean isReturned = libraryService.returnBook(1, bookId);
+        if (!isReturned) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Member's book not found");
+        return "Book successfully returned";
+    }
 }

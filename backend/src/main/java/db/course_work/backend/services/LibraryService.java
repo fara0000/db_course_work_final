@@ -59,4 +59,16 @@ public class LibraryService {
         bookRepository.save(book);
         return Optional.of(book);
     }
+
+    @Transactional
+    public boolean returnBook(long memberId, long bookId) {
+        Member member = getMember(memberId);
+        Optional<Book> optionalBook = bookRepository.findByIdAndLibraryId(bookId, getLibraryId(member));
+        if (optionalBook.isEmpty()) return false;
+        Book book = optionalBook.get();
+        if (book.isAvailable() || book.getBorrower().getId() != member.getId()) return false;
+        book.setBorrower(null);
+        bookRepository.save(book);
+        return true;
+    }
 }
