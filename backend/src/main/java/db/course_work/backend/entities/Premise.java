@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,4 +24,6 @@ public class Premise {
     @ManyToOne
     @JoinColumn(name = "synagogue_id")
     private Synagogue synagogue;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "premise")
+    private List<SynagogueAttribute> attributes;
 }

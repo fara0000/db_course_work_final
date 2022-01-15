@@ -22,6 +22,4 @@ public class Attribute {
     @Size(max = 250)
     @NotEmpty
     private String description;
-    @ManyToMany(mappedBy = "attributes")
-    private List<Tradition> traditions;
 }

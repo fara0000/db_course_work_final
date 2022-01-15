@@ -16,7 +16,8 @@ public class SynagogueAttribute {
     @OneToOne(cascade = CascadeType.ALL)
     private Attribute attribute;
     @ManyToOne
-    private Premise premises;
+    @JoinColumn(name = "premise_id")
+    private Premise premise;
     @NotNull
     @Size(max = 250)
     @NotEmpty
