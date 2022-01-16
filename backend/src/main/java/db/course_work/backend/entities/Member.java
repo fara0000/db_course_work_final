@@ -24,7 +24,6 @@ public class Member implements UserDetails {
     @NotEmpty
     private String name;
 
-    @Size(min = 4, max = 50)
     @Column(name = "surname")
     private String surname;
 

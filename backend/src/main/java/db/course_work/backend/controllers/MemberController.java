@@ -1,17 +1,13 @@
-package db.course_work.backend.controller;
+package db.course_work.backend.controllers;
 
-import db.course_work.backend.entities.Synagogue;
 import db.course_work.backend.services.MemberService;
 import db.course_work.backend.utils.MemberDTO;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import db.course_work.backend.entities.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,11 +34,12 @@ public class MemberController {
             }
 
             boolean isSaved = memberService.saveMember(member);
+            System.out.println(isSaved);
             return isSaved ? new ResponseEntity<>("User registered successfully!", HttpStatus.OK) :
                     new ResponseEntity<>("User has already registered!", HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.info("Unexpected Error {}", e.getMessage());
-            return new ResponseEntity<>("Unexpected Error", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Validation Error", HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -14,6 +14,6 @@ export const saveUserApi = (userData: RegistrationFormValues, synagogueId: numbe
       'content-type': 'application/json'
     },
   })
-    .then((res) => res.data)
+    .then((res) => res)
     .catch((err) => console.log('saveUserApi error:', err))
 }

@@ -1,10 +1,10 @@
-import { makeAutoObservable } from 'mobx';
+import { action, makeAutoObservable } from 'mobx';
 import * as authApis from '../../api/auth/api';
 import { RegistrationFormValues } from '../../views/auth/registration/types';
-import { AxiosResponse } from 'axios';
 
 class AuthStore {
   synagogues = [];
+  isLoading = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -14,9 +14,11 @@ class AuthStore {
     return authApis.saveUserApi(member, synagogueId).then(res => res);
   }
 
-  getSynagogues() {
-    authApis.getSynagoguesApi()
-      .then((res) => this.synagogues = res)
+  @action
+  getSynagogues = async () => {
+    this.isLoading = true;
+    this.synagogues = await authApis.getSynagoguesApi();
+    this.isLoading = false;
   }
 }
 

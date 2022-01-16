@@ -1,4 +1,4 @@
-package db.course_work.backend.controller;
+package db.course_work.backend.controllers;
 
 import db.course_work.backend.entities.Synagogue;
 import db.course_work.backend.services.SynagogueService;

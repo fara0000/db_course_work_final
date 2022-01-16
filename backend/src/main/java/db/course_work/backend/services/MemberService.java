@@ -31,6 +31,8 @@ public class MemberService implements UserDetailsService {
         log.info(String.valueOf(synagogue));
 
         if(memberRepository.findMemberByLogin(member.getLogin()) != null) {
+            log.info("1");
+            log.info(String.valueOf(memberRepository.findMemberByLogin(member.getLogin()) != null));
             return false;
         }
         member.setName(memberDTO.getName());
