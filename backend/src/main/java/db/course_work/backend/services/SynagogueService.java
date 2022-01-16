@@ -38,4 +38,8 @@ public class SynagogueService {
         Member member = getMember(memberId);
         return memberRepository.findMembersBySynagogueId(member.getSynagogue().getId());
     }
+
+    public List<Synagogue> getAllSynagogues() {
+        return synagogueRepository.findAll();
+    }
 }

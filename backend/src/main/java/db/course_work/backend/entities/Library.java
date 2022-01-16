@@ -1,13 +1,13 @@
 package db.course_work.backend.entities;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @PrimaryKeyJoinColumn(name = "id")
 public class Library extends Premise {
     @OneToOne

@@ -1,6 +1,9 @@
 package db.course_work.backend.entities;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
@@ -8,7 +11,9 @@ import javax.validation.constraints.*;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Synagogue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +27,7 @@ public class Synagogue {
     @Min(value = 1)
     @Max(value = 100000)
     private Float size;
-    @Size(max = 50)
+    @Size(min = 4, max = 50)
     private String architectureStyle;
     @ManyToOne
     private Tradition tradition;

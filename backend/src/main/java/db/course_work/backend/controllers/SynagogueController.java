@@ -19,16 +19,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/synagogue")
+@RequestMapping("/synagogues")
 public class SynagogueController {
     private final SynagogueService synagogueService;
     private final SynagogueMapper synagogueMapper;
     private final MemberMapper memberMapper;
-
-    private MemberList convertMembersToDto(List<Member> members) {
-        return new MemberList(members.stream().map(memberMapper::convertMemberToDto).collect(Collectors.toList()));
-    }
-
 
     public SynagogueController(SynagogueService synagogueService, SynagogueMapper synagogueMapper, MemberMapper memberMapper) {
         this.synagogueService = synagogueService;
@@ -46,6 +41,11 @@ public class SynagogueController {
     @GetMapping("/my/members")
     public MemberList getSynagogueMembers() {
         Set<Member> members = synagogueService.getSynagogueMembers(1);
-        return convertMembersToDto(new ArrayList<>(members));
+        return memberMapper.convertMembersToDto(new ArrayList<>(members));
+    }
+
+    @GetMapping("")
+    public SynagogueList getAllSynagogues () {
+        return synagogueMapper.convertSynagoguesToDto(synagogueService.getAllSynagogues());
     }
 }

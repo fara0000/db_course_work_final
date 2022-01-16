@@ -3,6 +3,7 @@ package db.course_work.backend.dto.mappers;
 import db.course_work.backend.dto.response.AttributeDto;
 import db.course_work.backend.dto.response.PremiseDto;
 import db.course_work.backend.dto.response.SynagogueDto;
+import db.course_work.backend.dto.response.SynagogueList;
 import db.course_work.backend.entities.Premise;
 import db.course_work.backend.entities.Synagogue;
 import db.course_work.backend.entities.SynagogueAttribute;
@@ -41,5 +42,10 @@ public class SynagogueMapper {
                 .premises(premiseDtos)
                 .library(convertPremiseToDto(synagogue.getLibrary()))
                 .build();
+    }
+
+    public SynagogueList convertSynagoguesToDto(List<Synagogue> synagogues) {
+        List<SynagogueDto> dtos = synagogues.stream().map(this::convertSynagogueToDto).collect(Collectors.toList());
+        return new SynagogueList(dtos);
     }
 }
