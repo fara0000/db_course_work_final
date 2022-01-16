@@ -1,4 +1,4 @@
-package db.course_work.backend.utils;
+package db.course_work.backend.dto;
 
 import lombok.Data;
 

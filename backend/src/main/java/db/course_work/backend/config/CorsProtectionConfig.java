@@ -17,10 +17,4 @@ public class CorsProtectionConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:3000")
                 .allowCredentials(true);
     }
-
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/**/{:[^\\.]*}")
-//                .setViewName("/index.html");
-//    }
 }

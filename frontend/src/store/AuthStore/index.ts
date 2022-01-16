@@ -1,6 +1,6 @@
 import { action, makeAutoObservable } from 'mobx';
 import * as authApis from '../../api/auth/api';
-import { RegistrationFormValues } from '../../views/auth/registration/types';
+import { RegistrationFormValues } from '../../views/auth/types';
 
 class AuthStore {
   synagogues = [];
@@ -13,6 +13,8 @@ class AuthStore {
   saveMember(member: RegistrationFormValues, synagogueId: number) {
     return authApis.saveUserApi(member, synagogueId).then(res => res);
   }
+
+  // loginMember(member: Re)
 
   @action
   getSynagogues = async () => {

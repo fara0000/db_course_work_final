@@ -6,3 +6,8 @@ export interface RegistrationFormValues {
   role: string;
   synagogue: string;
 }
+
+export interface LoginFormInitialValues {
+  login: string;
+  password: string;
+}

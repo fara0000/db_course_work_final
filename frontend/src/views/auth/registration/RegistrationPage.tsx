@@ -7,7 +7,6 @@ import {
   Button,
   Heading,
   Text,
-  useColorModeValue,
   chakra, Fade,
 } from '@chakra-ui/react';
 import { Path } from '../../../core/router/paths';
@@ -16,9 +15,9 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { SelectField } from '../../../components/SelectField';
 import { Roles } from '../../../utils/roles';
-import { RegistrationFormValues } from './types';
+import { RegistrationFormValues } from '../types';
 import { TextInput } from '../../../components/TextInput';
-import { filterSynagogues } from './util';
+import { filterSynagogues, useBackgroundColor } from '../utils';
 import authStore from '../../../store/AuthStore';
 import { observer } from 'mobx-react-lite';
 import { successToast } from '../../../components/alerts/success';
@@ -29,8 +28,6 @@ import { errorToast } from '../../../components/alerts/fail';
 export const RegistrationPage = observer(() => {
   const { isLoading, synagogues } = authStore;
   const [isClearSelectField, setIsClearSelectField] = useState(false);
-  const bg1 = useColorModeValue('gray.50', 'gray.800');
-  const bg2 = useColorModeValue('white', 'gray.700');
 
   useEffect(() => {
     authStore.getSynagogues();
@@ -64,7 +61,7 @@ export const RegistrationPage = observer(() => {
           minH={'100vh'}
           align={'center'}
           justify={'center'}
-          bg={bg1}
+          bg={useBackgroundColor('gray.50', 'gray.800')}
         >
           <Stack spacing={8} mx={'auto'} maxW={'lg'} pb="40px" px={6}>
             <Stack align={'center'} mb="8px">
@@ -75,7 +72,7 @@ export const RegistrationPage = observer(() => {
             <Form id="registration-page-form" style={{ margin: 0 }}>
               <Box
                 rounded={'lg'}
-                bg={bg2}
+                bg={useBackgroundColor('white', 'gray.700')}
                 boxShadow={'lg'}
                 p="25px 26px"
               >

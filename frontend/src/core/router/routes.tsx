@@ -6,15 +6,16 @@ import { Path } from './paths';
 import { NotFoundPage } from '../../views/notFoundPage/NotFoundPage';
 import { RegistrationPage } from '../../views/auth/registration/RegistrationPage';
 import { RedirectWithQuery } from './redirectWithQuery';
+import { MainPage } from '../../views/main/mainPage';
 
 
 export const routes: React.ReactNode = (
   <Switch>
     <Route path={Path.LOGIN} exact component={LoginPage} />
 
-    <Route path={Path.REGISTER} exact>
-      <RegistrationPage />
-    </Route>
+    <Route path={Path.REGISTER} exact component={RegistrationPage} />
+
+    <Route path={Path.MAIN} exact component={MainPage} />
 
     <Route path={Path.NOTFOUND} component={NotFoundPage} />
 

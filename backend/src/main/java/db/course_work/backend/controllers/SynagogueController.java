@@ -16,7 +16,6 @@ public class SynagogueController {
         this.synagogueService = synagogueService;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/synagogues")
     public List<Synagogue> getAllSynagogues () {
        return this.synagogueService.getAllSynagogues();

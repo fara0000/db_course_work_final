@@ -1,18 +1,25 @@
 package db.course_work.backend.services;
 
+import db.course_work.backend.dto.LoginRequest;
 import db.course_work.backend.entities.Member;
 import db.course_work.backend.entities.Synagogue;
 import db.course_work.backend.repositories.MemberRepository;
 import db.course_work.backend.repositories.SynagogueRepository;
-import db.course_work.backend.utils.MemberDTO;
+import db.course_work.backend.dto.MemberDTO;
+import db.course_work.backend.security.JwtUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +27,11 @@ import java.util.Optional;
 @AllArgsConstructor
 @Service
 public class MemberService implements UserDetailsService {
+    private final JwtUtils jwtUtils;
     private final MemberRepository memberRepository;
     private final SynagogueRepository synagogueRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AuthenticationManager authenticationManager;
 
 
     public boolean saveMember(MemberDTO memberDTO) {
@@ -62,6 +71,14 @@ public class MemberService implements UserDetailsService {
     public Member findMemberById(Integer id) {
         Optional<Member> member = memberRepository.findById(id);
         return member.orElse(new Member());
+    }
+
+    public String getUserToken(@Valid LoginRequest member) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(member.getLogin(), member.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return jwtUtils.generateJwtToken(authentication);
     }
 
     public List<Member> findAllMembers() {
