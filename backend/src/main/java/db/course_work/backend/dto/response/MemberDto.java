@@ -1,23 +1,25 @@
-package db.course_work.backend.entities;
+package db.course_work.backend.dto.response;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import db.course_work.backend.entities.Event;
+import db.course_work.backend.entities.Synagogue;
+import lombok.Builder;
+import lombok.Getter;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Set;
 
-@Entity
 @Getter
-@Setter
-@ToString
-@NoArgsConstructor
-public class Member {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+@Builder
+public class MemberDto {
+    @NotNull
+    private Long id;
     @NotNull
     @Size(max = 50)
     @NotEmpty
@@ -30,9 +32,8 @@ public class Member {
     @Size(max = 50)
     @NotEmpty
     private String role;
-    @ManyToOne
-    @JoinColumn(name = "synagogue_id")
+    @JsonBackReference
     private Synagogue synagogue;
-    @ManyToMany(mappedBy = "members")
+    @JsonBackReference
     private Set<Event> events;
 }

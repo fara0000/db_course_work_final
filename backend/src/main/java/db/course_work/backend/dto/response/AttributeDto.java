@@ -1,4 +1,4 @@
-package db.course_work.backend.dto;
+package db.course_work.backend.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

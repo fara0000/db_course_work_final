@@ -1,24 +1,25 @@
-package db.course_work.backend.entities;
+package db.course_work.backend.dto.request;
 
 import lombok.Data;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.OffsetDateTime;
+import java.util.List;
 
-@Entity
 @Data
-public class Attribute {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class EventRequest {
     @NotNull
     @Size(max = 50)
     @NotEmpty
-    private String name;
+    private String type;
     @NotNull
     @Size(max = 250)
     @NotEmpty
     private String description;
+    @NotNull
+    private OffsetDateTime date;
+    @NotNull
+    private List<Long> memberIds;
 }

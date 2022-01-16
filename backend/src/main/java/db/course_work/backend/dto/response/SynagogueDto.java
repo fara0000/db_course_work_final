@@ -1,8 +1,7 @@
-package db.course_work.backend.dto;
+package db.course_work.backend.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import db.course_work.backend.entities.Library;
-import db.course_work.backend.entities.Premise;
+import db.course_work.backend.dto.response.PremiseDto;
 import db.course_work.backend.entities.Tradition;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,7 +1,8 @@
 package db.course_work.backend.controllers;
 
-import db.course_work.backend.dto.BookDto;
-import db.course_work.backend.dto.BookList;
+import db.course_work.backend.dto.mappers.BookMapper;
+import db.course_work.backend.dto.response.BookDto;
+import db.course_work.backend.dto.response.BookList;
 import db.course_work.backend.entities.Book;
 import db.course_work.backend.services.LibraryService;
 import org.springframework.http.HttpStatus;
@@ -16,42 +17,29 @@ import java.util.stream.Collectors;
 @RequestMapping("/books")
 public class LibraryController {
     private final LibraryService libraryService;
+    private final BookMapper bookMapper;
 
-    private BookDto convertBookToDto(Book book) {
-        return BookDto.builder()
-                .id(book.getId())
-                .name(book.getName())
-                .description(book.getDescription())
-                .borrowerId(book.isAvailable() ? null : book.getBorrower().getId())
-                .available(book.isAvailable())
-                .build();
-    }
-
-    private BookList convertBooksToDto(List<Book> books) {
-        List<BookDto> bookDtos = books.stream().map(this::convertBookToDto).collect(Collectors.toList());
-        return new BookList(bookDtos);
-    }
-
-    public LibraryController(LibraryService libraryService) {
+    public LibraryController(LibraryService libraryService, BookMapper bookMapper) {
         this.libraryService = libraryService;
+        this.bookMapper = bookMapper;
     }
 
     @GetMapping("")
     @ResponseBody
     public BookList getAllBooks() {
-        return convertBooksToDto(libraryService.getBooks(1));
+        return bookMapper.convertBooksToDto(libraryService.getBooks(1));
     }
 
     @GetMapping(value = "", params = "available=true")
     @ResponseBody
     public BookList getAvailableBooks() {
-        return convertBooksToDto(libraryService.getAvailableBooks(1));
+        return bookMapper.convertBooksToDto(libraryService.getAvailableBooks(1));
     }
 
     @GetMapping(value = "/my")
     @ResponseBody
     public BookList getMemberBooks() {
-        return convertBooksToDto(libraryService.getMemberBooks(1));
+        return bookMapper.convertBooksToDto(libraryService.getMemberBooks(1));
     }
 
     @PostMapping(value = "/{bookId}/borrow")
@@ -61,7 +49,7 @@ public class LibraryController {
         if (bookOptional.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Available book with provided id not found");
         }
-        return convertBookToDto(bookOptional.get());
+        return bookMapper.convertBookToDto(bookOptional.get());
     }
 
     @PostMapping(value = "/{bookId}/return")

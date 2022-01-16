@@ -1,6 +1,6 @@
-package db.course_work.backend.dto;
+package db.course_work.backend.dto.response;
 
-import db.course_work.backend.entities.Book;
+import db.course_work.backend.dto.response.BookDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

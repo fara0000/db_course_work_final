@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class SynagogueService {
@@ -26,14 +27,14 @@ public class SynagogueService {
         return synagogueRepository.findSynagogueByMemberId(memberId);
     }
 
-    public Member getMember(long memberId) throws UserNotFoundException {
+    public Member getMember(long memberId) {
         Optional<Member> memberOptional = memberRepository.findById(memberId);
         if (memberOptional.isEmpty()) throw new UserNotFoundException();
         return memberOptional.get();
     }
 
     @Transactional
-    public List<Member> getSynagogueMembers(long memberId) {
+    public Set<Member> getSynagogueMembers(long memberId) {
         Member member = getMember(memberId);
         return memberRepository.findMembersBySynagogueId(member.getSynagogue().getId());
     }
