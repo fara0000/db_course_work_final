@@ -25,10 +25,8 @@ public class LoginResponseSerializer extends StdSerializer<LoginResponse> {
         jgen.writeStartObject();
         jgen.writeNumberField("id", loginResponse.getMember().getId());
         jgen.writeStringField("name", loginResponse.getMember().getName());
-        jgen.writeStringField("surname", loginResponse.getMember().getSurname() == null ? loginResponse.getMember().getSurname() : "");
-        jgen.writeStringField("login", loginResponse.getMember().getLogin());
+        jgen.writeStringField("surname", loginResponse.getMember().getSurname() == null ? "" : loginResponse.getMember().getSurname());
         jgen.writeStringField("role", loginResponse.getMember().getRole());
-        jgen.writeObjectField("synagogue", loginResponse.getMember().getSynagogue());
         jgen.writeEndObject();
         jgen.writeEndObject();
     }

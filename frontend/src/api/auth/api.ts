@@ -4,7 +4,7 @@ import * as authTypes from '../../views/auth/types';
 
 export const getSynagoguesApi = () => {
   return axios.get(authUrls.getSynagogueUrl)
-    .then((res) => res.data)
+    .then((res) => res.data.synagogues)
     .catch((err) => console.log('getSynagoguesApi error:', err))
 };
 

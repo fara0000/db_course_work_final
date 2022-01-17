@@ -78,6 +78,7 @@ public class MemberService implements UserDetailsService {
                 new UsernamePasswordAuthenticationToken(member.getLogin(), member.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        System.out.println(authentication);
         return jwtUtils.generateJwtToken(authentication);
     }
 

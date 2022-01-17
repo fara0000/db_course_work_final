@@ -29,10 +29,6 @@ export const RegistrationPage = observer(() => {
   const { isLoading, synagogues } = authStore;
   const [isClearSelectField, setIsClearSelectField] = useState(false);
 
-  useEffect(() => {
-    authStore.getSynagogues();
-  }, []);
-
   return (
     <Fade in={!isLoading}>
       <Formik<RegistrationFormValues>
@@ -126,18 +122,20 @@ export const RegistrationPage = observer(() => {
                       },
                     ]}
                   />
-                  <SelectField
-                    isClearable={isClearSelectField}
-                    name='synagogue'
-                    label='Synagogue'
-                    isRequired
-                    options={synagogues?.map((item: any) => ({
-                      id: item.id,
-                      value: item.name,
-                      label: item.name,
-                    })) || []
-                    }
-                  />
+                  {!isLoading &&
+                    <SelectField
+                      isClearable={isClearSelectField}
+                      name='synagogue'
+                      label='Synagogue'
+                      isRequired
+                      options={synagogues?.map((item: any) => ({
+                        id: item.id,
+                        value: item.name,
+                        label: item.name,
+                      })) || []
+                      }
+                    />
+                  }
                   <Stack spacing={10} pt={2}>
                     <Button
                       type="submit"

@@ -10,10 +10,10 @@ import lombok.Data;
 @Data
 public class LoginResponse {
     private String userToken;
-    private Member member;
+    private MemberDto member;
 
-    public LoginResponse(String userToken, Member member) {
-        this.member = member;
+    public LoginResponse(String userToken, MemberDto member) {
         this.userToken = userToken;
+        this.member = member;
     }
 }

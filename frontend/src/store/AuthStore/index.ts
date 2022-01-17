@@ -8,6 +8,7 @@ class AuthStore {
 
   constructor() {
     makeAutoObservable(this);
+    this.getSynagogues()
   }
 
   saveMember(member: RegistrationFormValues, synagogueId: number) {
