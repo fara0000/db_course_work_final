@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Доступ только для авторизованных пользователей
                 .antMatchers("/main/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/main", "/").authenticated()
-                .antMatchers("/events/**", "/synagogues/**", "/events/**").authenticated()
+                .antMatchers("/events/**", "/synagogues/**", "/books/**").authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
