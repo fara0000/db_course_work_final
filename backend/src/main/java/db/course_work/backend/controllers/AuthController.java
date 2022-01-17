@@ -1,12 +1,13 @@
 package db.course_work.backend.controllers;
 
-import com.google.gson.Gson;
-import db.course_work.backend.dto.LoginRequest;
-import db.course_work.backend.dto.LoginResponse;
+import db.course_work.backend.dto.mappers.MemberMapper;
+import db.course_work.backend.dto.request.LoginRequest;
+import db.course_work.backend.dto.request.MemberRequest;
+import db.course_work.backend.dto.response.LoginResponse;
+import db.course_work.backend.dto.response.MemberDto;
 import db.course_work.backend.entities.Member;
 import db.course_work.backend.repositories.MemberRepository;
 import db.course_work.backend.services.MemberService;
-import db.course_work.backend.dto.MemberDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,15 +27,17 @@ import javax.validation.Valid;
 public class AuthController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
+    private final MemberMapper memberMapper;
 
     @Autowired
-    public AuthController(MemberService memberService, MemberRepository memberRepository) {
+    public AuthController(MemberService memberService, MemberRepository memberRepository, MemberMapper memberMapper) {
         this.memberService = memberService;
         this.memberRepository = memberRepository;
+        this.memberMapper = memberMapper;
     }
 
     @RequestMapping(value = "/register", consumes = "application/json", produces = "application/json", method = {RequestMethod.OPTIONS, RequestMethod.POST})
-    public ResponseEntity<String> register(@Valid @RequestBody MemberDTO member, BindingResult result) {
+    public ResponseEntity<String> register(@Valid @RequestBody MemberRequest member, BindingResult result) {
         try {
             log.info("POST request to register user {}", member);
             if (result.hasErrors()) {
@@ -63,7 +66,8 @@ public class AuthController {
             }
 
             Member member = memberRepository.findMemberByLogin(loginRequest.getLogin());
-            LoginResponse loginResponse = new LoginResponse(memberService.getUserToken(loginRequest), member);
+            MemberDto memberDto = memberMapper.convertMemberToDto(member);
+            LoginResponse loginResponse = new LoginResponse(memberService.getUserToken(loginRequest), memberDto);
             return new ResponseEntity<>(loginResponse, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Unexpected error {}", e.getMessage());

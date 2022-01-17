@@ -1,0 +1,3 @@
+spring.datasource.url=jdbc:postgresql://${host}:${port}/studs
+spring.datasource.username=${db_username}
+spring.datasource.password=${db_password}

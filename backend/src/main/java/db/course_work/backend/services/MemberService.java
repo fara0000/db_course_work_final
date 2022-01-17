@@ -1,11 +1,11 @@
 package db.course_work.backend.services;
 
-import db.course_work.backend.dto.LoginRequest;
+import db.course_work.backend.dto.request.LoginRequest;
 import db.course_work.backend.entities.Member;
 import db.course_work.backend.entities.Synagogue;
 import db.course_work.backend.repositories.MemberRepository;
 import db.course_work.backend.repositories.SynagogueRepository;
-import db.course_work.backend.dto.MemberDTO;
+import db.course_work.backend.dto.request.MemberRequest;
 import db.course_work.backend.security.JwtUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +34,9 @@ public class MemberService implements UserDetailsService {
     private final AuthenticationManager authenticationManager;
 
 
-    public boolean saveMember(MemberDTO memberDTO) {
+    public boolean saveMember(MemberRequest memberRequest) {
         Member member = new Member();
-        Synagogue synagogue = synagogueRepository.findById(memberDTO.getSynagogueId()).get();
+        Synagogue synagogue = synagogueRepository.findById(memberRequest.getSynagogueId()).get();
         log.info(String.valueOf(synagogue));
 
         if(memberRepository.findMemberByLogin(member.getLogin()) != null) {
@@ -44,11 +44,11 @@ public class MemberService implements UserDetailsService {
             log.info(String.valueOf(memberRepository.findMemberByLogin(member.getLogin()) != null));
             return false;
         }
-        member.setName(memberDTO.getName());
-        member.setSurname(memberDTO.getSurname());
-        member.setLogin(memberDTO.getLogin());
-        member.setPassword(memberDTO.getPassword());
-        member.setRole(memberDTO.getRole());
+        member.setName(memberRequest.getName());
+        member.setSurname(memberRequest.getSurname());
+        member.setLogin(memberRequest.getLogin());
+        member.setPassword(memberRequest.getPassword());
+        member.setRole(memberRequest.getRole());
         member.setSynagogue(synagogue);
 
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
@@ -68,7 +68,7 @@ public class MemberService implements UserDetailsService {
         return member;
     }
 
-    public Member findMemberById(Integer id) {
+    public Member findMemberById(Long id) {
         Optional<Member> member = memberRepository.findById(id);
         return member.orElse(new Member());
     }
@@ -78,6 +78,7 @@ public class MemberService implements UserDetailsService {
                 new UsernamePasswordAuthenticationToken(member.getLogin(), member.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        System.out.println(authentication);
         return jwtUtils.generateJwtToken(authentication);
     }
 
@@ -85,7 +86,7 @@ public class MemberService implements UserDetailsService {
         return memberRepository.findAll();
     }
 
-    public boolean deleteUser(Integer id) {
+    public boolean deleteUser(Long id) {
         if(memberRepository.findById(id).isPresent()) {
             memberRepository.deleteById(id);
             return true;

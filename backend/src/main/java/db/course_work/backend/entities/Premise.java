@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -15,22 +17,18 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Tradition {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Premise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull
     @Size(max = 50)
     @NotEmpty
-    @Column(nullable = false, unique = true)
     private String name;
-    @Size(max = 250)
-    private String description;
-    @ManyToMany
-    @JoinTable(
-            name = "tradition_attribute",
-            joinColumns = @JoinColumn(name = "tradition_id"),
-            inverseJoinColumns = @JoinColumn(name = "attribute_id")
-    )
-    private List<Attribute> attributes;
+    @ManyToOne
+    @JoinColumn(name = "synagogue_id")
+    private Synagogue synagogue;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "premise")
+    private List<SynagogueAttribute> attributes;
 }

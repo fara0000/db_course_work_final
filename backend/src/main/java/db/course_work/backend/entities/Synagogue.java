@@ -1,34 +1,38 @@
 package db.course_work.backend.entities;
 
 import lombok.Data;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-import javax.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Formula;
 
-@Data
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.util.List;
+
 @Entity
-@Table(name = "synagogue")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Synagogue {
     @Id
-    @Column(name = "synagogue_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
-    @Size(min = 4, max = 30)
-    @Column(name = "name", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @NotNull
+    @Size(min = 4, max = 50)
+    @Column(nullable = false, unique = true)
     @NotEmpty
     private String name;
-
-    @Size(min = 1)
-    @Column(name = "size")
-    @NotEmpty
+    @NotNull
+    @Min(value = 1)
+    @Max(value = 100000)
     private Float size;
-
     @Size(min = 4, max = 50)
-    @Column(name = "architecture_style")
-    private String style;
-
+    private String architectureStyle;
     @ManyToOne
-    @JoinColumn(name = "tradition")
     private Tradition tradition;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "synagogue", orphanRemoval = true)
+    private List<Premise> premises;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "housedInSynagogue")
+    private Library library;
 }

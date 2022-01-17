@@ -9,28 +9,21 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Tradition {
+public class Attribute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull
     @Size(max = 50)
     @NotEmpty
-    @Column(nullable = false, unique = true)
     private String name;
+    @NotNull
     @Size(max = 250)
+    @NotEmpty
     private String description;
-    @ManyToMany
-    @JoinTable(
-            name = "tradition_attribute",
-            joinColumns = @JoinColumn(name = "tradition_id"),
-            inverseJoinColumns = @JoinColumn(name = "attribute_id")
-    )
-    private List<Attribute> attributes;
 }
