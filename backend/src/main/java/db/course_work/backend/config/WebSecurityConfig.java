@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-                httpSecurity
+        httpSecurity
                 .httpBasic().disable()
                 .csrf().disable()
                 .authorizeRequests()
@@ -44,9 +44,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login", "/register").not().fullyAuthenticated()
                 //Доступ разрешен всем пользователей
                 .antMatchers("/", "/static/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/synagogues").permitAll()
                 //Доступ только для авторизованных пользователей
                 .antMatchers("/main/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/main", "/").authenticated()
+                .antMatchers("/events/**", "/synagogues/**", "/events/**").authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
