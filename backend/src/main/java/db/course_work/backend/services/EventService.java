@@ -10,6 +10,8 @@ import db.course_work.backend.exceptions.*;
 import db.course_work.backend.repositories.EventRepository;
 import db.course_work.backend.repositories.MeetingRepository;
 import db.course_work.backend.repositories.MemberRepository;
+import db.course_work.backend.specifications.EventSpecs;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,28 +60,31 @@ public class EventService {
     }
 
     @Transactional
-    public List<Event> getAllEvents(long memberId) {
+    public List<Event> getEvents(long memberId, boolean memberOnly, boolean onlyInFuture) {
         Member member = getMember(memberId);
-        return eventRepository.findBySynagogueId(member.getSynagogue().getId());
+        Specification<Event> spec = Specification.where(EventSpecs.hasSynagogue(member.getSynagogue().getId()));
+        if (memberOnly) spec = spec.and(EventSpecs.hasMemberWithId(memberId));
+        if (onlyInFuture) spec = spec.and(EventSpecs.dateAfter(OffsetDateTime.now()));
+        return eventRepository.findAll(spec);
+    }
+
+    public List<Event> getEvents(long memberId) {
+        return getEvents(memberId, false, false);
     }
 
     @Transactional
-    public List<Meeting> getAllMeetings(long memberId) {
+    public List<Meeting> getMeetings(long memberId, boolean memberOnly, boolean onlyInFuture) {
         Member member = getMember(memberId);
-        return meetingRepository.findBySynagogueId(member.getSynagogue().getId());
+        Specification<Meeting> spec = Specification.where(EventSpecs.hasSynagogue(member.getSynagogue().getId()));
+        if (memberOnly) spec = spec.and(EventSpecs.hasMemberWithId(memberId));
+        if (onlyInFuture) spec = spec.and(EventSpecs.dateAfter(OffsetDateTime.now()));
+        return meetingRepository.findAll(spec);
     }
 
-    @Transactional
-    public List<Event> getFutureEvents(long memberId) {
-        Member member = getMember(memberId);
-        return eventRepository.findBySynagogueIdAndDateAfter(member.getSynagogue().getId(), OffsetDateTime.now());
+    public List<Meeting> getMeetings(long memberId) {
+        return getMeetings(memberId, false, false);
     }
 
-    @Transactional
-    public List<Meeting> getFutureMeetings(long memberId) {
-        Member member = getMember(memberId);
-        return meetingRepository.findBySynagogueIdAndDateAfter(member.getSynagogue().getId(), OffsetDateTime.now());
-    }
 
     @Transactional
     public Event scheduleEventAtSynagogueOfMember(long memberId, EventRequest eventDto) {

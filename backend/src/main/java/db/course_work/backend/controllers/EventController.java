@@ -26,26 +26,26 @@ public class EventController {
     }
 
     @GetMapping("")
-    public EventList getAllEvents() {
-        List<Event> events = eventService.getAllEvents(1);
+    public EventList getAllEvents(@RequestParam(defaultValue = "false") boolean onlyMemberEvents) {
+        List<Event> events = eventService.getEvents(1, onlyMemberEvents, false);
         return eventMapper.convertEventsToDto(events);
     }
 
     @GetMapping(value = "", params = "inFuture=true")
-    public EventList getFutureEvents() {
-        List<Event> events = eventService.getFutureEvents(1);
+    public EventList getFutureEvents(@RequestParam(defaultValue = "false") boolean onlyMemberEvents) {
+        List<Event> events = eventService.getEvents(1, onlyMemberEvents, true);
         return eventMapper.convertEventsToDto(events);
     }
 
     @GetMapping(value = "", params = "onlyMeetings=true")
-    public MeetingList getAllMeetings() {
-        List<Meeting> meetings = eventService.getAllMeetings(1);
+    public MeetingList getAllMeetings(@RequestParam(defaultValue = "false") boolean onlyMemberEvents) {
+        List<Meeting> meetings = eventService.getMeetings(1, onlyMemberEvents, false);
         return eventMapper.convertMeetingsToDto(meetings);
     }
 
     @GetMapping(value = "", params = { "onlyMeetings=true", "inFuture=true" })
-    public MeetingList getFutureMeetings() {
-        List<Meeting> meetings = eventService.getFutureMeetings(1);
+    public MeetingList getFutureMeetings(@RequestParam(defaultValue = "false") boolean onlyMemberEvents) {
+        List<Meeting> meetings = eventService.getMeetings(1, onlyMemberEvents, true);
         return eventMapper.convertMeetingsToDto(meetings);
     }
 
