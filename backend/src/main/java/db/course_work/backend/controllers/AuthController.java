@@ -2,10 +2,12 @@ package db.course_work.backend.controllers;
 
 import com.google.gson.Gson;
 import db.course_work.backend.dto.request.LoginRequest;
+import db.course_work.backend.dto.request.MemberRequest;
 import db.course_work.backend.dto.response.LoginResponse;
+import db.course_work.backend.entities.Member;
 import db.course_work.backend.repositories.MemberRepository;
 import db.course_work.backend.services.MemberService;
-import db.course_work.backend.dto.request.MemberRequest;
+import db.course_work.backend.dto.response.MemberDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,12 +62,10 @@ public class AuthController {
                 log.error("Validation error");
                 return new ResponseEntity<>("Ошибка валидации", HttpStatus.BAD_REQUEST);
             }
-            Gson gson = new Gson();
 
-            Long memberId = memberRepository.findMemberByLogin(loginRequest.getLogin()).getId();
-            LoginResponse loginResponse = new LoginResponse(memberService.getUserToken(loginRequest), memberId);
-            return new ResponseEntity<>(gson.toJson(loginResponse), HttpStatus.OK);
-
+            Member member = memberRepository.findMemberByLogin(loginRequest.getLogin());
+            LoginResponse loginResponse = new LoginResponse(memberService.getUserToken(loginRequest), member);
+            return new ResponseEntity<>(loginResponse, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Unexpected error {}", e.getMessage());
             return new ResponseEntity<>("Неверные учетные данные пользователя", HttpStatus.BAD_REQUEST);
