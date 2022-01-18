@@ -5,13 +5,17 @@ export default extendTheme({
   /*
     everything should be SYNC up with https://www.figma.com/file/N8xUFYN885SNJDOzVQUdDI/GameCar_final?node-id=2%3A40975
   */
+  // config: {
+  //   initialColorMode: "light",
+  //   useSystemColorMode: false
+  // },
   styles: {
     global: {
-      // body: {
-      //   w: '100%',
-      //   h: '100%',
-      //   background: 'linear-gradient(126.61deg, #3B4933 49.08%, #29346A 107.74%)',
-      // },
+      body: {
+        w: '100%',
+        h: '100%',
+        overflow: 'hidden'
+      },
     },
   },
   fonts: {
@@ -158,6 +162,18 @@ export default extendTheme({
     remind: all colors should be taken from figma
   */
   colors: {
+    brand: {
+      50: "#ecefff",
+      100: "#cbceeb",
+      200: "#a9aed6",
+      300: "#888ec5",
+      400: "#666db3",
+      500: "#4d5499",
+      600: "#3c4178",
+      700: "#2a2f57",
+      800: "#181c37",
+      900: "#080819"
+    },
     blue: {
       50: '#E6EEFF',
       100: '#CEEDFF',

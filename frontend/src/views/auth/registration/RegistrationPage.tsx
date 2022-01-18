@@ -18,7 +18,7 @@ import { Roles } from '../../../utils/roles';
 import { RegistrationFormValues } from '../types';
 import { TextInput } from '../../../components/TextInput';
 import { filterSynagogues, useBackgroundColor } from '../utils';
-import authStore from '../../../store/AuthStore';
+import authStore from '../../../store/auth';
 import { observer } from 'mobx-react-lite';
 import { successToast } from '../../../components/alerts/success';
 import { errorToast } from '../../../components/alerts/fail';

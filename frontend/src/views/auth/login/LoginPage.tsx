@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, useState } from 'react';
 import {
   Flex,
   Box,
@@ -12,23 +12,46 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { Path } from '../../../core/router/paths';
-import { LoginFormInitialValues } from '../types';
-import { Form, Formik } from 'formik';
+import { LoginFormInitialValues, UserType } from '../types';
+import { Form, Formik, FormikHelpers } from 'formik';
 import { TextInput } from '../../../components/TextInput';
 import { useBackgroundColor } from '../utils';
+import authStore from '../../../store/auth';
 import { loginUserApi } from '../../../api/auth/api';
 import { errorToast } from '../../../components/alerts/fail';
-import authStore from '../../../store/AuthStore';
-import { successToast } from '../../../components/alerts/success';
+import { observer } from 'mobx-react-lite';
 
 const wikiSynagogueUrl = 'https://en.wikipedia.org/wiki/Synagogue';
 
 // TODO: use yup object for validate input because stars is not a good choice in Login Page
+export interface LoginPageProps {
+  userData?: UserType;
+  setUserData: any;
+}
 
-export const LoginPage = ()  => {
+export const LoginPage: FC<LoginPageProps> = observer(({setUserData}) => {
   const bg1 = useBackgroundColor('gray.50', 'gray.800');
   const bg2 = useBackgroundColor('white', 'gray.700');
   const history = useHistory();
+
+  const signIn = (values: LoginFormInitialValues, helpers:  FormikHelpers<LoginFormInitialValues>) => {
+    if(values.login && values.password) {
+      loginUserApi(values).then((res) => {
+        helpers.resetForm();
+        if(res?.status === 200) {
+          // authStore.setUser(res.data.userData);
+          console.log(res.data.userData, 'res');
+          setUserData({...res.data.userData});
+          authStore.setTokenToLocalStorage(res.data.userToken);
+          history.push('/main')
+        } else {
+          errorToast('Wrong user data, please try again!');
+        }
+      });
+    } else {
+      errorToast('Please, enter all needed fields!');
+    }
+  }
 
   return (
     <Formik<LoginFormInitialValues>
@@ -38,15 +61,7 @@ export const LoginPage = ()  => {
         password: '',
       }}
       onSubmit={(values, formikHelpers) => {
-        if(values.login && values.password) {
-          loginUserApi(values).then((res) => {
-            console.log(res, 'login response');
-            formikHelpers.resetForm();
-            return res?.status === 200 ? history.push('/main') : errorToast('Wrong user data, please try again!');
-          });
-        } else {
-          errorToast('Please, enter all needed fields!');
-        }
+        signIn(values, formikHelpers);
       }}
     >
       {({ isSubmitting, dirty, isValid, values }) => (
@@ -119,5 +134,5 @@ export const LoginPage = ()  => {
         </Flex>
       )}
     </Formik>
-  );
-}
+  )}
+)

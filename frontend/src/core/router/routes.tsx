@@ -7,21 +7,24 @@ import { NotFoundPage } from '../../views/notFoundPage/NotFoundPage';
 import { RegistrationPage } from '../../views/auth/registration/RegistrationPage';
 import { RedirectWithQuery } from './redirectWithQuery';
 import { MainPage } from '../../views/main/mainPage';
+import { LibraryPage } from '../../views/library/LibraryPage';
+import { EventsPage } from '../../views/event/EventPage';
 
 
 export const routes: React.ReactNode = (
   <Switch>
+    <Route path="/" exact>
+      <RedirectWithQuery to={Path.MAIN} />
+    </Route>
     <Route path={Path.LOGIN} exact component={LoginPage} />
-
     <Route path={Path.REGISTER} exact component={RegistrationPage} />
+    <Route path={Path.MAIN} exact component={MainPage}/>
 
-    <Route path={Path.MAIN} exact component={MainPage} />
+    <Route path={Path.LIBRARY} exact component={LibraryPage} />
+
+    <Route path={Path.EVENT} exact component={EventsPage} />
 
     <Route path={Path.NOTFOUND} component={NotFoundPage} />
-
-    <Route path="/" exact>
-      <RedirectWithQuery to={Path.LOGIN} />
-    </Route>
 
     <Route path="*">
       <Redirect to={Path.NOTFOUND} />

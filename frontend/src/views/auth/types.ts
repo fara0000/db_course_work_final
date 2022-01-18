@@ -11,3 +11,10 @@ export interface LoginFormInitialValues {
   login: string;
   password: string;
 }
+
+export type UserType = {
+  id: number;
+  name: string;
+  surname: string;
+  role: string;
+}
