@@ -3,4 +3,6 @@ export const enum Path {
   REGISTER = '/register',
   NOTFOUND = '/404',
   MAIN = '/main',
+  LIBRARY = '/library',
+  EVENT = '/event',
 }
