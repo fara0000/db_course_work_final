@@ -59,30 +59,26 @@ public class EventService {
         this.synagogueService = synagogueService;
     }
 
-    @Transactional
-    public List<Event> getEvents(long memberId, boolean memberOnly, boolean onlyInFuture) {
-        Member member = getMember(memberId);
-        Specification<Event> spec = Specification.where(EventSpecs.hasSynagogue(member.getSynagogue().getId()));
-        if (memberOnly) spec = spec.and(EventSpecs.hasMemberWithId(memberId));
+    public List<Event> getEventsInSynagogue(long synagogueId, Optional<Long> memberId, boolean onlyInFuture) {
+        Specification<Event> spec = Specification.where(EventSpecs.hasSynagogue(synagogueId));
+        if (memberId.isPresent()) spec = spec.and(EventSpecs.hasMemberWithId(memberId.get()));
         if (onlyInFuture) spec = spec.and(EventSpecs.dateAfter(OffsetDateTime.now()));
         return eventRepository.findAll(spec);
     }
 
-    public List<Event> getEvents(long memberId) {
-        return getEvents(memberId, false, false);
+    public List<Event> getEventsInSynagogue(long memberId) {
+        return getEventsInSynagogue(memberId, Optional.empty(), false);
     }
 
-    @Transactional
-    public List<Meeting> getMeetings(long memberId, boolean memberOnly, boolean onlyInFuture) {
-        Member member = getMember(memberId);
-        Specification<Meeting> spec = Specification.where(EventSpecs.hasSynagogue(member.getSynagogue().getId()));
-        if (memberOnly) spec = spec.and(EventSpecs.hasMemberWithId(memberId));
+    public List<Meeting> getMeetings(long synagogueId, Optional<Long> memberId, boolean onlyInFuture) {
+        Specification<Meeting> spec = Specification.where(EventSpecs.hasSynagogue(synagogueId));
+        if (memberId.isPresent()) spec = spec.and(EventSpecs.hasMemberWithId(memberId.get()));
         if (onlyInFuture) spec = spec.and(EventSpecs.dateAfter(OffsetDateTime.now()));
         return meetingRepository.findAll(spec);
     }
 
     public List<Meeting> getMeetings(long memberId) {
-        return getMeetings(memberId, false, false);
+        return getMeetings(memberId, Optional.empty(), false);
     }
 
 
