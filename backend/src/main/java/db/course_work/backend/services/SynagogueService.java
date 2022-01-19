@@ -34,9 +34,8 @@ public class SynagogueService {
     }
 
     @Transactional
-    public Set<Member> getSynagogueMembers(long memberId) {
-        Member member = getMember(memberId);
-        return memberRepository.findMembersBySynagogueId(member.getSynagogue().getId());
+    public Set<Member> getSynagogueMembers(long synagogueId) {
+        return memberRepository.findMembersBySynagogueId(synagogueId);
     }
 
     public List<Synagogue> getAllSynagogues() {

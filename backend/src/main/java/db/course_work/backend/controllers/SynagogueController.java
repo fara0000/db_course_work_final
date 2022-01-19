@@ -7,6 +7,7 @@ import db.course_work.backend.entities.Member;
 import db.course_work.backend.entities.Synagogue;
 import db.course_work.backend.services.SynagogueService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,20 +33,20 @@ public class SynagogueController {
     }
 
     @GetMapping("/my")
-    public SynagogueDto getSynagogue() {
-        Optional<Synagogue> synagogueOptional = synagogueService.getMemberSynagogue(1);
+    public SynagogueDto getSynagogue(@AuthenticationPrincipal Member user) {
+        Optional<Synagogue> synagogueOptional = synagogueService.getMemberSynagogue(user.getId());
         if (synagogueOptional.isEmpty()) throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal error");
         return synagogueMapper.convertSynagogueToDto(synagogueOptional.get());
     }
 
     @GetMapping("/my/members")
-    public MemberList getSynagogueMembers() {
-        Set<Member> members = synagogueService.getSynagogueMembers(1);
+    public MemberList getSynagogueMembers(@AuthenticationPrincipal Member user) {
+        Set<Member> members = synagogueService.getSynagogueMembers(user.getSynagogue().getId());
         return memberMapper.convertMembersToDto(new ArrayList<>(members));
     }
 
     @GetMapping("")
-    public SynagogueList getAllSynagogues () {
+    public SynagogueList getAllSynagogues() {
         return synagogueMapper.convertSynagoguesToDto(synagogueService.getAllSynagogues());
     }
 }

@@ -27,16 +27,13 @@ public class LibraryService {
         return member.getSynagogue().getLibrary().getId();
     }
 
-    @Transactional
-    public List<Book> getBooks(long memberId) {
-        Member member = synagogueService.getMember(memberId);
-        return bookRepository.findByLibraryId(getLibraryId(member));
+
+    public List<Book> getBooksInSynagogue(long synagogueId) {
+        return bookRepository.findByLibrary_SynagogueId(synagogueId);
     }
 
-    @Transactional
-    public List<Book> getAvailableBooks(long memberId) {
-        Member member = synagogueService.getMember(memberId);
-        return bookRepository.findByLibraryIdAndAvailableTrue(getLibraryId(member));
+    public List<Book> getAvailableBooksInSynagogue(long synagogueId) {
+        return bookRepository.findByLibrary_SynagogueIdAndAvailableTrue(synagogueId);
     }
 
     @Transactional
@@ -46,13 +43,13 @@ public class LibraryService {
     }
 
     @Transactional
-    public Optional<Book> takeBook(long memberId, long bookId) {
-        Member member = synagogueService.getMember(memberId);
+    public Optional<Book> takeBook(long borrowerId, long bookId) {
+        Member member = synagogueService.getMember(borrowerId);
         Optional<Book> optionalBook = bookRepository.findByIdAndLibraryId(bookId, getLibraryId(member));
         if (optionalBook.isEmpty()) return Optional.empty();
         Book book = optionalBook.get();
         if (!book.isAvailable()) return Optional.empty();
-        book.setBorrower(memberRepository.findById(memberId).orElseThrow(
+        book.setBorrower(memberRepository.findById(borrowerId).orElseThrow(
                 UserNotFoundException::new
         ));
         bookRepository.save(book);
@@ -60,8 +57,8 @@ public class LibraryService {
     }
 
     @Transactional
-    public boolean returnBook(long memberId, long bookId) {
-        Member member = synagogueService.getMember(memberId);
+    public boolean returnBook(long borrowerId, long bookId) {
+        Member member = synagogueService.getMember(borrowerId);
         Optional<Book> optionalBook = bookRepository.findByIdAndLibraryId(bookId, getLibraryId(member));
         if (optionalBook.isEmpty()) return false;
         Book book = optionalBook.get();

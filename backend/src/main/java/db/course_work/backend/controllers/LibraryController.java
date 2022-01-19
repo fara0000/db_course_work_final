@@ -4,14 +4,14 @@ import db.course_work.backend.dto.mappers.BookMapper;
 import db.course_work.backend.dto.response.BookDto;
 import db.course_work.backend.dto.response.BookList;
 import db.course_work.backend.entities.Book;
+import db.course_work.backend.entities.Member;
 import db.course_work.backend.services.LibraryService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/books")
@@ -26,26 +26,26 @@ public class LibraryController {
 
     @GetMapping("")
     @ResponseBody
-    public BookList getAllBooks() {
-        return bookMapper.convertBooksToDto(libraryService.getBooks(1));
+    public BookList getAllBooks(@AuthenticationPrincipal Member user) {
+        return bookMapper.convertBooksToDto(libraryService.getBooksInSynagogue(user.getSynagogue().getId()));
     }
 
     @GetMapping(value = "", params = "available=true")
     @ResponseBody
-    public BookList getAvailableBooks() {
-        return bookMapper.convertBooksToDto(libraryService.getAvailableBooks(1));
+    public BookList getAvailableBooks(@AuthenticationPrincipal Member user) {
+        return bookMapper.convertBooksToDto(libraryService.getAvailableBooksInSynagogue(user.getSynagogue().getId()));
     }
 
     @GetMapping(value = "/my")
     @ResponseBody
-    public BookList getMemberBooks() {
-        return bookMapper.convertBooksToDto(libraryService.getMemberBooks(1));
+    public BookList getMemberBooks(@AuthenticationPrincipal Member user) {
+        return bookMapper.convertBooksToDto(libraryService.getMemberBooks(user.getId()));
     }
 
     @PostMapping(value = "/{bookId}/borrow")
     @ResponseBody
-    public BookDto borrowBook(@PathVariable("bookId") long bookId) {
-        Optional<Book> bookOptional = libraryService.takeBook(1, bookId);
+    public BookDto borrowBook(@PathVariable("bookId") long bookId, @AuthenticationPrincipal Member user) {
+        Optional<Book> bookOptional = libraryService.takeBook(user.getId(), bookId);
         if (bookOptional.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Available book with provided id not found");
         }
@@ -54,8 +54,8 @@ public class LibraryController {
 
     @PostMapping(value = "/{bookId}/return")
     @ResponseBody
-    public String returnBook(@PathVariable("bookId") long bookId) {
-        boolean isReturned = libraryService.returnBook(1, bookId);
+    public String returnBook(@PathVariable("bookId") long bookId, @AuthenticationPrincipal Member user) {
+        boolean isReturned = libraryService.returnBook(user.getId(), bookId);
         if (!isReturned) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Member's book not found");
         return "Book successfully returned";
     }

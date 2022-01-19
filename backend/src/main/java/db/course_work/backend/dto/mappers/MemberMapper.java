@@ -10,14 +10,20 @@ import java.util.stream.Collectors;
 
 @Component
 public class MemberMapper {
+    private final SynagogueMapper synagogueMapper;
+
+    public MemberMapper(SynagogueMapper synagogueMapper) {
+        this.synagogueMapper = synagogueMapper;
+    }
+
     public MemberDto convertMemberToDto(Member member) {
         return MemberDto.builder()
                 .id(member.getId())
                 .name(member.getName())
                 .surname(member.getSurname())
                 .role(member.getRole())
-                .synagogue(member.getSynagogue())
-                .events(member.getEvents())
+                .login(member.getLogin())
+                .synagogue(synagogueMapper.convertSynagogueToDto(member.getSynagogue()))
                 .build();
     }
 
