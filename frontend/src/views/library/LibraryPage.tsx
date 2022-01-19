@@ -16,24 +16,25 @@ type BooksType = {
 // TODO: change it to mobx realization
 
 export const LibraryPage = () => {
+  const token = localStorage.getItem('jwt');
   const [books, setBooks] = useState<BooksType[]>([]);
   const [myBooks, setMyBooks] = useState<BooksType[]>([]);
   const [availableBooks, setAvailableBooks] = useState<BooksType[]>([]);
 
   function getBooks() {
-    libraryApis.getAllBooksApi().then((res) => {
+    libraryApis.getAllBooksApi(token).then((res) => {
       setBooks(res);
     })
   }
 
   function getAvailableBooks() {
-    libraryApis.getAvailableBooksApi().then((res) => {
+    libraryApis.getAvailableBooksApi(token).then((res) => {
       setAvailableBooks(res);
     })
   }
 
   function getMyBooks() {
-    libraryApis.getMyBooksApi().then((res) => {
+    libraryApis.getMyBooksApi(token).then((res) => {
       setMyBooks(res);
     })
   }

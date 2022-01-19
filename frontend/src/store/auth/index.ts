@@ -4,7 +4,6 @@ import { RegistrationFormValues, UserType } from '../../views/auth/types';
 import { observer } from 'mobx-react-lite';
 
 class AuthStore {
-  @observable
   user = {
     id: 0,
     name: '',
@@ -26,26 +25,26 @@ class AuthStore {
 
   @action
   setTokenToLocalStorage = (jwt: string) => {
-    this.isAuthorized = true;
     localStorage.setItem("jwt", jwt);
+    this.isAuthorized = true;
   }
 
   @action
   setUser = (userData: UserType) => {
+    console.log(userData, 'user');
     this.isLoading = true;
-    const user = toJS({...userData});
-    this.user = user;
+    this.user = {...userData};
     console.log(isObservable(this.user), '35')
   }
 
   @action
-  getUser = (user: UserType) => {
-    this.user = user;
+  getUser = () => {
+    return this.user;
   }
 
   @action
-  callUser = () => {
-    return this.user;
+  setIsAuthorized = (bool: boolean) => {
+    this.isAuthorized = bool;
   }
 
   @action

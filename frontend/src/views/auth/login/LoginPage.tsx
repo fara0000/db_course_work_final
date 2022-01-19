@@ -24,12 +24,8 @@ import { observer } from 'mobx-react-lite';
 const wikiSynagogueUrl = 'https://en.wikipedia.org/wiki/Synagogue';
 
 // TODO: use yup object for validate input because stars is not a good choice in Login Page
-export interface LoginPageProps {
-  userData?: UserType;
-  setUserData: any;
-}
 
-export const LoginPage: FC<LoginPageProps> = observer(({setUserData}) => {
+export const LoginPage: FC = observer(() => {
   const bg1 = useBackgroundColor('gray.50', 'gray.800');
   const bg2 = useBackgroundColor('white', 'gray.700');
   const history = useHistory();
@@ -39,9 +35,7 @@ export const LoginPage: FC<LoginPageProps> = observer(({setUserData}) => {
       loginUserApi(values).then((res) => {
         helpers.resetForm();
         if(res?.status === 200) {
-          // authStore.setUser(res.data.userData);
-          console.log(res.data.userData, 'res');
-          setUserData({...res.data.userData});
+          authStore.setUser(res.data.userData);
           authStore.setTokenToLocalStorage(res.data.userToken);
           history.push('/main')
         } else {
