@@ -12,8 +12,9 @@ class LibraryStore {
 
   @action
   getAllBooks = async () => {
+    const token = localStorage.getItem('jwt');
     this.isLoading = true;
-    this.books = await libraryApis.getAllBooksApi();
+    this.books = await libraryApis.getAllBooksApi(token);
     this.isLoading = false;
   }
 }
