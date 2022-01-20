@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Flex, chakra, Button, TabPanel, TabList, Tabs, Tab, TabPanels } from '@chakra-ui/react';
 import * as libraryApis from '../../api/library/api';
-import libraryStore from '../../store/library';
 import { CustomTable } from '../../components/table/Table';
 import { Column } from 'react-table';
 

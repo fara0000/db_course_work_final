@@ -31,7 +31,6 @@ class SynagogueStore {
 
   constructor() {
     makeAutoObservable(this);
-    this.getMySynagogueInfo()
   }
 
   @action
