@@ -85,7 +85,9 @@ export const LibraryPage = () => {
           <Tab _focus={{ boxShadow: "none" }} onClick={() => {
             getAvailableBooks()
           }}>Available books</Tab>
-          <Tab _focus={{ boxShadow: "none" }}>My books</Tab>
+          <Tab _focus={{ boxShadow: "none" }} onClick={() => {
+            getMyBooks()
+          }}>My books</Tab>
         </TabList>
 
         <TabPanels w="100%">
