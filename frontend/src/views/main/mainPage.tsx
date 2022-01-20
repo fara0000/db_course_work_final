@@ -11,6 +11,10 @@ export const MainPage: FC = observer(() => {
   const { user } = authStore;
   const { isLoading, members, mySynagogue } = synagogueStore;
 
+  useEffect(() => {
+    synagogueStore.getMySynagogueInfo();
+  }, [])
+
   const user1 = {...user};
   console.log(user1, 'user');
   // console.log(!isLoading && members, 'members')
@@ -19,7 +23,7 @@ export const MainPage: FC = observer(() => {
   return (
     <Flex h="100vh" w="100%" alignItems="center" justifyContent="center" fontSize="40px" color="blue.500">
       Welcome, you successfully signed in to our website!
-      {mySynagogue.tradition.description}
+      {mySynagogue?.tradition.description}
       {
         !isLoading && members.map((item) => <span>{item.name}</span>)
       }
