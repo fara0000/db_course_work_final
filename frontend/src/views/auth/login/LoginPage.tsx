@@ -35,7 +35,7 @@ export const LoginPage: FC = observer(() => {
       loginUserApi(values).then((res) => {
         helpers.resetForm();
         if(res?.status === 200) {
-          authStore.setUser(res.data.userData);
+          authStore.setUser(res.data.member);
           authStore.setTokenToLocalStorage(res.data.userToken);
           history.push('/main')
         } else {
@@ -69,8 +69,8 @@ export const LoginPage: FC = observer(() => {
           <Stack spacing={8} mx={'auto'} maxW={'lg'} w="450px" pb="45px" px={6}>
             <Stack align={'center'}>
               <Heading fontSize={'4xl'}>Sign in to your account</Heading>
-              <Text fontSize={'lg'} color={'gray.600'} mt="0">
-                to enjoy all of our <Link color={'blue.400'} href={wikiSynagogueUrl} target="_blank">Synagogue</Link>
+              <Text fontSize={'md'} color={'gray.600'} mt="0">
+                to enjoy all of our Virtual <Link color={'blue.400'} href={wikiSynagogueUrl} target="_blank">Synagogue</Link> Platform
               </Text>
             </Stack>
             <Form id="login-page-form" style={{ marginTop: '26px' }}>

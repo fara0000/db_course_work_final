@@ -7,16 +7,26 @@ import {
   Text,
   Button,
   useDisclosure, Icon,
-  chakra
+  chakra, MenuList, MenuItem, Menu, MenuButton,
 } from '@chakra-ui/react';
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { FaUserAlt } from 'react-icons/fa';
 import { NavigationLink } from '../navigationLink/NavigationLink';
 import { Path } from '../../core/router/paths';
+import { observer } from 'mobx-react-lite';
+import authStore from '../../store/auth';
+import { FaUserAlt } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
 
-export const PageHeader = () => {
+export const PageHeader = observer(() => {
+  const { user } = authStore;
+  const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
+
+  const logOut = () => {
+    authStore.deleteTokenFromLocalStorage();
+    history.push('login');
+  }
 
   return (
     <Flex
@@ -51,18 +61,20 @@ export const PageHeader = () => {
         <NavigationLink to={Path.EVENT} text="Events" />
       </Stack>
 
-      <Box
-        display={{ base: isOpen ? "block" : "none", md: "block" }}
-        mt={{ base: 4, md: 0 }}
-      >
-        <Button
-          variant="outline"
-          _hover={{ bg: "blue.700"}}
+        <Box
+          display={{ base: isOpen ? "block" : "none", md: "block" }}
+          mt={{ base: 4, md: 0 }}
         >
-          <Icon as={FaUserAlt} mr="7px"/>
-          <chakra.span fontSize="18px">Fakhri</chakra.span>
-        </Button>
-      </Box>
+          <Button
+            variant="outline"
+            _hover={{ bg: "white.700"}}
+            _focus={{ bg: "white.700" }}
+            _active={{ bg: "#ccc" }}
+            onClick={logOut}
+          >
+            <Icon as={FaUserAlt} mr="7px"/>
+            <chakra.span fontSize="18px">{user.name}</chakra.span>
+          </Button>
+        </Box>
     </Flex>
-  );
-};
+)});

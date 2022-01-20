@@ -109,8 +109,8 @@ export const RegistrationPage = observer(() => {
                     isRequired
                     options={[
                       {
-                        label: Roles.габай,
-                        value: Roles.габай,
+                        label: Roles.новоспасенный,
+                        value: Roles.новоспасенный,
                       },
                       {
                         label: Roles.общинник,
