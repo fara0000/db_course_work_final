@@ -133,33 +133,18 @@ export const LibraryPage = () => {
                 columns={columns}
                 data={data}
               />
-              {'[]' === JSON.stringify(data) &&
-              <Flex w='100%' h='100%' justifyContent='center' alignItems='center'>
-                <Empty
-                  style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }} />
-              </Flex>}
             </TabPanel>
             <TabPanel>
               <TableBlock
                 columns={columns}
                 data={availableBooksData}
               />
-              {'[]' === JSON.stringify(availableBooksData) &&
-              <Flex w='100%' h='100%' justifyContent='center' alignItems='center'>
-                <Empty
-                  style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }} />
-              </Flex>}
             </TabPanel>
             <TabPanel>
               <TableBlock
                 columns={columns}
                 data={myBooksData}
               />
-              {'[]' === JSON.stringify(myBooksData) &&
-              <Flex w='100%' h='100%' justifyContent='center' alignItems='center'>
-                <Empty
-                  style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }} />
-              </Flex>}
             </TabPanel>
           </TabPanels>
         </Tabs>

@@ -10,13 +10,14 @@ export interface Props<T> {
     open: any
     data: Array<T>;
     columns: any;
-    getSelectedTaskId?: any;
+    setData?: any;
 }
 
 export const TableContent: FC<Props<object>> = (props) => {
     const {
         data,
         columns,
+      setData,
     } = props;
 
     const [renderColumns, setRenderColumns] = useState<any>([]);
@@ -33,9 +34,9 @@ export const TableContent: FC<Props<object>> = (props) => {
             title={item.title}
             dataIndex={item.dataIndex}
             onCellClick={(row) => {
-                handleTask(row)
+                setData(row)
             }}
-            // render={item.key === 'join' ? ((text: any) => (<Button>+</Button>)) : (<span>+</span>)}
+            render={item.render}
           />
         )))
     }, [data]);

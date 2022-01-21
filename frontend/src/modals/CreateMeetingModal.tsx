@@ -32,7 +32,7 @@ export const CreateMeeting = ({ isOpen, onClose }: ChangePasswordModalProps) => 
           type: '',
           description: '',
           date: '',
-          membersIds: [1, 3, 5],
+          memberIds: [1, 3, 5],
           premiseId: 3,
           maxVisitors: 1,
           food: 1,
