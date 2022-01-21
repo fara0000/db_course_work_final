@@ -24,8 +24,10 @@ class AuthStore {
   }
 
   @action
-  setTokenToLocalStorage = (jwt: string) => {
+  setTokenToLocalStorage = (jwt: string, userInfo: any) => {
     localStorage.setItem("jwt", jwt);
+    localStorage.setItem("name", userInfo.name);
+    localStorage.setItem("role", userInfo.role);
     this.isAuthorized = true;
   }
 

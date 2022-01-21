@@ -89,9 +89,11 @@ export function CustomTable<T>({
             Header: ({ getToggleAllRowsSelectedProps }: any) => (
               <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
             ),
-            Cell: ({ row }: any) => (
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            ),
+            Cell: ({ row }: any) => {
+              return (
+                <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+              )
+            },
           },
           ...columns,
           actions && {

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { Box, ChakraProvider as ThemeProvider } from '@chakra-ui/react';
+import { Box, ChakraProvider as ThemeProvider, PortalProps } from '@chakra-ui/react';
 import chakraTheme from './chakraTheme';
 
 export const ChakraProvider: FC = ({ children }) => (
@@ -10,3 +10,9 @@ export const ChakraProvider: FC = ({ children }) => (
     </Box>
   </ThemeProvider>
 );
+
+export function getChakraPortalProps(): Pick<PortalProps, 'appendToParentPortal' | 'containerRef'> {
+  return {
+    containerRef: { current: document.querySelector('#react-root-node') },
+  };
+}
