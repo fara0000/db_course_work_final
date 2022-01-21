@@ -14,7 +14,6 @@ export default extendTheme({
       body: {
         w: '100%',
         h: '100%',
-        overflow: 'hidden'
       },
     },
   },
