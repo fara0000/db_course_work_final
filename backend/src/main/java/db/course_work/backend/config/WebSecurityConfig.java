@@ -50,9 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login", "/register").not().fullyAuthenticated()
                 //Доступ разрешен всем пользователей
                 .antMatchers("/", "/static/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/synagogues").permitAll()
                 //Доступ только для авторизованных пользователей
-                .antMatchers("/main/**").authenticated()
-                .antMatchers(HttpMethod.GET, "/main", "/").authenticated()
+                .antMatchers("/**").authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

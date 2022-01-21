@@ -23,7 +23,7 @@ import {observer} from 'mobx-react-lite';
 import {CardLink} from "./CardLink";
 import booksBackground from "../../images/books.jpg";
 import meetingBackground from "../../images/event.jpg";
-import { Path } from '../../core/router/paths';
+import {Path} from '../../core/router/paths';
 
 
 export const MainPage: FC = observer(() => {
@@ -34,8 +34,7 @@ export const MainPage: FC = observer(() => {
     synagogueStore.getMySynagogueInfo();
   }, [])
 
-  const user1 = {...user};
-  console.log(user1, 'user');
+  console.log(user.name, 'name');
   // console.log(!isLoading && members, 'members')
   // console.log(!isLoading && mySynagogue, 'mySynagogue')
 

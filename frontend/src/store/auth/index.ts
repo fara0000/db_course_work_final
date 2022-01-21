@@ -30,6 +30,12 @@ class AuthStore {
   }
 
   @action
+  deleteTokenFromLocalStorage = () => {
+    localStorage.clear();
+    this.isAuthorized = false;
+  }
+
+  @action
   setUser = (userData: UserType) => {
     console.log(userData, 'user');
     this.isLoading = true;
