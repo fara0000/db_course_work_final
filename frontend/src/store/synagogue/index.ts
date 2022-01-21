@@ -1,8 +1,10 @@
-import { configure, action, isObservable, makeAutoObservable, observable, toJS } from 'mobx';
+// @ts-nocheck
+import {configure, action, isObservable, makeAutoObservable, observable, toJS, computed} from 'mobx';
 import * as synagogueApis from '../../api/synagogue/api';
 import * as authTypes from '../../views/auth/types';
 import { RegistrationFormValues, UserType } from '../../views/auth/types';
 import { observer } from 'mobx-react-lite';
+
 
 // architectureStyle: "неомавританский"
 // id: 1
@@ -38,9 +40,20 @@ class SynagogueStore {
     const token = localStorage.getItem("jwt")
     this.isLoading = true;
     this.mySynagogue = await synagogueApis.getMySynagogueInfoApi(token);
-    const arr = await synagogueApis.getMySynagogueMembersApi(token);
-    this.members = [...arr];
+    const memberList = await synagogueApis.getMySynagogueMembersApi(token);
+    this.members = [...memberList];
     this.isLoading = false;
+  }
+
+  getCommaSeparatedPremises = (premiseIndex: number, attrCount: number) => {
+    const premise = this.mySynagogue.premises[premiseIndex];
+    if (premise.attributes.length === 0) return "";
+    const initial = premise.attributes[0].name;
+    // @ts-ignore
+    return premise.attributes.splice(1, attrCount).reduce((str, attr) => {
+      // @ts-ignore
+      return str + `, ${attr.name}`
+    }, initial);
   }
 }
 
