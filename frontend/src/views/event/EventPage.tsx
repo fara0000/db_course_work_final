@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Flex, chakra, Button } from '@chakra-ui/react';
+import { Flex, chakra, Button, useDisclosure } from '@chakra-ui/react';
 import { LeftSideMenu } from './components/LeftSideMenu';
 import { observer } from 'mobx-react-lite';
 import eventsStore from '../../store/events/index';
@@ -81,10 +81,15 @@ const columns_events = [
 
 export const EventsPage = observer(() => {
   const { meetings, events, futureEvents, isMeeting, isEvents } = eventsStore;
+  const { onOpen, isOpen, onClose } = useDisclosure();
+  const [ data, setData ] = useState({});
+
+  console.log(data);
+
   return (
     <Flex h="100vh" w="100%">
       <LeftSideMenu />
-      <TableBlock current={isMeeting ? 'meetings' : (isEvents ? 'events' : 'futureEvents')} data={isMeeting ? meetings : (isEvents ? events : futureEvents)} columns={isMeeting ? columns_meetings : columns_events} />
+      <TableBlock setData={setData} current={isMeeting ? 'meetings' : (isEvents ? 'events' : 'futureEvents')} data={isMeeting ? meetings : (isEvents ? events : futureEvents)} columns={isMeeting ? columns_meetings : columns_events} />
     </Flex>
   )
 });

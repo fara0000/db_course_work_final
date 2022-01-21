@@ -9,15 +9,12 @@ export interface Props {
     data: any;
     columns: any;
     current?: string;
+    setData?: any;
 }
 
-export const TableBlock: FC<Props> = ({data, columns, current}) => {
+export const TableBlock: FC<Props> = ({data, columns, current, setData}) => {
     const role = localStorage.getItem('role')
     const { onOpen, isOpen, onClose } = useDisclosure();
-
-    const getSelectedTaskId = (id: number) => {
-        console.log(id);
-    }
 
     useEffect(() => {
         data = data.map((item: any) => ({
@@ -39,7 +36,7 @@ export const TableBlock: FC<Props> = ({data, columns, current}) => {
                 open={onOpen}
                 data={data}
                 columns={columns}
-                getSelectedTaskId={getSelectedTaskId}
+                setData={setData}
             />
           {current === 'events' ?
             <CreateEvent isOpen={isOpen} onClose={onClose} /> : null

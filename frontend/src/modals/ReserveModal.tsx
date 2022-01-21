@@ -32,7 +32,7 @@ export const CreateEvent = ({ isOpen, onClose }: ChangePasswordModalProps) => {
           type: '',
           description: '',
           date: '',
-          membersIds: [1, 3, 5],
+          memberIds: [1, 3, 5],
         }}
         onSubmit={async (values, helpers) => {
           const { date } = values;
