@@ -32,7 +32,7 @@ export const getAvailableBooksApi = (token: string | null) => {
 };
 
 export const borrowBookApi = (id: number, token: string | null) => {
-  return axios.post(libraryUrls.getAllBooksUrl + `${id}/borrow`, {
+  return axios.post(libraryUrls.getAllBooksUrl + `/${id}/borrow`, {
     headers: {
       'Authorization': `Bearer ${token}`
     }

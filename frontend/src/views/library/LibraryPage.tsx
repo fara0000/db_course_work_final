@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Flex, chakra, Button, TabPanel, TabList, Tabs, Tab, TabPanels, Box, useDisclosure } from '@chakra-ui/react';
+import { Flex, chakra, Button, TabPanel, TabList, Tabs, Tab, TabPanels, Box, useDisclosure, Text } from '@chakra-ui/react';
 import * as libraryApis from '../../api/library/api';
+import libraryStore from '../../store/library';
 import { CustomTable } from '../../components/table/Table';
 import { Column } from 'react-table';
 import { Empty } from 'antd';
@@ -39,6 +40,13 @@ const columns = [
     title: 'Available',
     key: 'available',
     dataIndex: 'available',
+    render: (isAvailable: boolean, row: any) => isAvailable ? (
+        <Button bgColor={'deepskyblue'} onClick={() => {
+          libraryStore.borrowBook(row.id);
+        }}>Забронировать</Button>
+    ) : (
+        <Text color={'red.500'}>Занято</Text>
+    )
   },
 ];
 
