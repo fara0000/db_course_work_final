@@ -140,7 +140,7 @@ export const LibraryPage = () => {
               </Flex>}
             </TabPanel>
             <TabPanel>
-              <CustomTable
+              <TableBlock
                 columns={columns}
                 data={availableBooksData}
               />
@@ -151,7 +151,10 @@ export const LibraryPage = () => {
               </Flex>}
             </TabPanel>
             <TabPanel>
-              <CustomTable columns={columns} data={myBooksData}/>
+              <TableBlock
+                columns={columns}
+                data={myBooksData}
+              />
               {'[]' === JSON.stringify(myBooksData) &&
               <Flex w='100%' h='100%' justifyContent='center' alignItems='center'>
                 <Empty
