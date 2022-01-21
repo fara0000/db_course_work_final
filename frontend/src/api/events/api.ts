@@ -51,8 +51,8 @@ export const createMeeting = (data: any, token: any) => {
     .catch((err) => console.log('returnBookApi error:', err))
 };
 
-export const reserveSeatAtMeeting = (meetingId: number, token: string) => {
-  return axios.post(libraryUrls.getAllEventsUrl + `/${meetingId}/reserveSeat?meeting=true`, {
+export const reserveSeatAtMeeting = (meetingId: number, token: string | null) => {
+  return axios.post(libraryUrls.getAllEventsUrl + `/${meetingId}/reserveSeat?meeting=true`, {},  {
     headers: {
       'Authorization': `Bearer ${token}`
     }

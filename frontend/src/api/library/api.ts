@@ -32,7 +32,7 @@ export const getAvailableBooksApi = (token: string | null) => {
 };
 
 export const borrowBookApi = (id: number, token: string | null) => {
-  return axios.post(libraryUrls.getAllBooksUrl + `/${id}/borrow`, {
+  return axios.post(libraryUrls.getAllBooksUrl + `/${id}/borrow`, {},{
     headers: {
       'Authorization': `Bearer ${token}`
     }
@@ -41,8 +41,8 @@ export const borrowBookApi = (id: number, token: string | null) => {
     .catch((err) => console.log('borrowBookApi error:', err))
 };
 
-export const returnBookApi = (id: number, token: string) => {
-  return axios.post(libraryUrls.getAllBooksUrl + `${id}/return`, {
+export const returnBookApi = (id: number, token: string | null) => {
+  return axios.post(libraryUrls.getAllBooksUrl + `/${id}/return`, {}, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
@@ -50,4 +50,5 @@ export const returnBookApi = (id: number, token: string) => {
     .then((res) => res.data)
     .catch((err) => console.log('returnBookApi error:', err))
 };
+
 

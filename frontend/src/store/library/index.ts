@@ -24,6 +24,13 @@ class LibraryStore {
     const resp = await libraryApis.borrowBookApi(id, token);
     console.log(resp);
   }
+
+  @action
+  returnBook = async (id: number) => {
+    const token = localStorage.getItem('jwt');
+    const resp = await libraryApis.returnBookApi(id, token);
+    console.log(resp);
+  }
 }
 
 export default new LibraryStore();

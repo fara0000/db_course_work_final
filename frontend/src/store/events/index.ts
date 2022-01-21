@@ -56,6 +56,12 @@ class EventsStore {
     const response = await eventApis.createMeeting(data, jwt);
     this.getMeetings();
   }
+
+  join = async (data: any) => {
+    const jwt = localStorage.getItem('jwt')
+    const response = await eventApis.reserveSeatAtMeeting(data, jwt);
+    this.getMeetings();
+  }
 }
 
 export default new EventsStore();

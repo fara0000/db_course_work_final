@@ -15,41 +15,6 @@ type BooksType = {
   available: boolean;
 }
 
-const columns = [
-  {
-    title: 'Id',
-    key: 'id',
-    dataIndex: 'id',
-  },
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Description',
-    dataIndex: 'description',
-    key: 'description',
-  },
-  {
-    title: 'Borrowed Id',
-    key: 'borrowerId',
-    dataIndex: 'borrowerId',
-  },
-  {
-    title: 'Available',
-    key: 'available',
-    dataIndex: 'available',
-    render: (isAvailable: boolean, row: any) => isAvailable ? (
-        <Button bgColor={'deepskyblue'} onClick={() => {
-          libraryStore.borrowBook(row.id);
-        }}>Забронировать</Button>
-    ) : (
-        <Text color={'red.500'}>Занято</Text>
-    )
-  },
-];
-
 
 // TODO: change it to mobx realization
 
@@ -78,6 +43,87 @@ export const LibraryPage = () => {
       setMyBooks(res);
     })
   }
+
+  const columns = [
+    {
+      title: 'Id',
+      key: 'id',
+      dataIndex: 'id',
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+    },
+    {
+      title: 'Borrowed Id',
+      key: 'borrowerId',
+      dataIndex: 'borrowerId',
+    },
+    {
+      title: 'Available',
+      key: 'available',
+      dataIndex: 'available',
+      render: (isAvailable: boolean, row: any) => isAvailable ? (
+        <Button bgColor={'deepskyblue'} onClick={() => {
+          libraryStore.borrowBook(row.id);
+          getBooks();
+          getMyBooks();
+          getAvailableBooks();
+        }}>Забронировать</Button>
+      ) : (
+        <Text color={'red.500'}>Занято</Text>
+      )
+    },
+  ];
+
+  const columns1 = [
+    {
+      title: 'Id',
+      key: 'id',
+      dataIndex: 'id',
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+    },
+    {
+      title: 'Borrowed Id',
+      key: 'borrowerId',
+      dataIndex: 'borrowerId',
+    },
+    {
+      title: 'Available',
+      key: 'available',
+      dataIndex: 'available',
+      render: (isAvailable: boolean, row: any) => isAvailable ? (
+        <Button bgColor={'deepskyblue'} onClick={() => {
+          libraryStore.borrowBook(row.id);
+          getBooks();
+          getMyBooks();
+          getAvailableBooks();
+        }}>Забронировать</Button>
+      ) : (
+        <Button bgColor="red.500" onClick={() => {
+          libraryStore.returnBook(row.id)
+          getBooks();
+          getMyBooks();
+          getAvailableBooks();
+        }}>Вернуть</Button>
+      )
+    },
+  ];
 
   useEffect(() => getBooks(), []);
 
@@ -117,8 +163,6 @@ export const LibraryPage = () => {
   //   ],
   //   []
   // );
-
-  // @ts-ignore
   return (
     <>
       <Flex h='100vh' w='100%'>
@@ -150,7 +194,7 @@ export const LibraryPage = () => {
             </TabPanel>
             <TabPanel>
               <TableBlock
-                columns={columns}
+                columns={columns1}
                 data={myBooksData}
               />
             </TabPanel>

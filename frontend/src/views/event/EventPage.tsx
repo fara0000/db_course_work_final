@@ -4,51 +4,7 @@ import { LeftSideMenu } from './components/LeftSideMenu';
 import { observer } from 'mobx-react-lite';
 import eventsStore from '../../store/events/index';
 import { TableBlock } from '../../modules/tableContent/TableBlock';
-
-const columns_meetings = [
-  {
-    title: 'Id',
-    key: 'id',
-    dataIndex: 'id',
-  },
-  {
-    title: 'Type',
-    dataIndex: 'type',
-    key: 'type',
-    render: (text: string) => <a>{text}</a>,
-  },
-  {
-    title: 'Description',
-    dataIndex: 'description',
-    key: 'description',
-  },
-  {
-    title: 'Maximum Visitors',
-    dataIndex: 'maxVisitors',
-    key: 'maxVisitors',
-  },
-  {
-    title: 'Member Count',
-    key: 'memberCount',
-    dataIndex: 'memberCount',
-  },
-  {
-    title: 'Food Count',
-    key: 'food',
-    dataIndex: 'food',
-  },
-  {
-    title: 'Date',
-    key: 'date',
-    dataIndex: 'date',
-  },
-  {
-    title: 'Присоединиться',
-    key: 'join',
-    dataIndex: 'join',
-    render: (text: string) => <Button>Join</Button>,
-  }
-];
+import { reserveSeatAtMeeting } from '../../api/events/api';
 
 const columns_events = [
   {
@@ -83,8 +39,57 @@ export const EventsPage = observer(() => {
   const { meetings, events, futureEvents, isMeeting, isEvents } = eventsStore;
   const { onOpen, isOpen, onClose } = useDisclosure();
   const [ data, setData ] = useState({});
+  const [ is, setIs ] = useState(false);
 
   console.log(data);
+
+  const columns_meetings = [
+    {
+      title: 'Id',
+      key: 'id',
+      dataIndex: 'id',
+    },
+    {
+      title: 'Type',
+      dataIndex: 'type',
+      key: 'type',
+      render: (text: string) => <a>{text}</a>,
+    },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+    },
+    {
+      title: 'Maximum Visitors',
+      dataIndex: 'maxVisitors',
+      key: 'maxVisitors',
+    },
+    {
+      title: 'Member Count',
+      key: 'memberCount',
+      dataIndex: 'memberCount',
+    },
+    {
+      title: 'Food Count',
+      key: 'food',
+      dataIndex: 'food',
+    },
+    {
+      title: 'Date',
+      key: 'date',
+      dataIndex: 'date',
+    },
+    {
+      title: 'Присоединиться',
+      key: 'join',
+      dataIndex: 'join',
+      render: (row: any) => !is ? <Button onClick={() => {
+        eventsStore.join(row.id)
+        setIs(true);
+      }}>Join</Button> : <span>joined</span>,
+    }
+  ];
 
   return (
     <Flex h="100vh" w="100%">
