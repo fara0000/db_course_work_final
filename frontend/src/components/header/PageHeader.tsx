@@ -19,6 +19,8 @@ import { useHistory } from 'react-router-dom';
 
 export const PageHeader = observer(() => {
   const { user } = authStore;
+  const name = localStorage.getItem('name')
+  const role = localStorage.getItem('role')
   const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
@@ -34,12 +36,15 @@ export const PageHeader = observer(() => {
       align="center"
       justify="space-between"
       wrap="wrap"
-      padding={6}
+      padding={3}
+      pl={5}
+      pr={5}
+      pt={'10px'}
       bg="#1565c0"
       color="white"
     >
       <Flex align="center" mr={5}>
-        <Heading as="h1" size="lg" letterSpacing={"tighter"}>
+        <Heading as="h1" size="lg" color="#fff" letterSpacing={"tighter"}>
           Virtual Synagogue
         </Heading>
       </Flex>
@@ -56,15 +61,20 @@ export const PageHeader = observer(() => {
         flexGrow={1}
         mt={{ base: 4, md: 0 }}
       >
-        <NavigationLink to={Path.MAIN} text="Main" />
-        <NavigationLink to={Path.LIBRARY} text="Library" />
-        <NavigationLink to={Path.EVENT} text="Events" />
+        <NavigationLink to={Path.MAIN} text="Main" activeStyle={{ borderBottom: '1px solid #fff'}}/>
+        <NavigationLink to={Path.LIBRARY} text="Library" activeStyle={{ borderBottom: '1px solid #fff'}}/>
+        <NavigationLink to={Path.EVENT} text="Events" activeStyle={{ borderBottom: '1px solid #fff'}}/>
       </Stack>
 
         <Box
           display={{ base: isOpen ? "block" : "none", md: "block" }}
           mt={{ base: 4, md: 0 }}
+          d={'flex'}
+          flexDir="row"
         >
+          <Box>
+            Role: {role || user.role}
+          </Box>
           <Button
             variant="outline"
             _hover={{ bg: "white.700"}}
@@ -73,7 +83,7 @@ export const PageHeader = observer(() => {
             onClick={logOut}
           >
             <Icon as={FaUserAlt} mr="7px"/>
-            <chakra.span fontSize="18px">{user.name}</chakra.span>
+            <chakra.span fontSize="18px">{user.name || name}</chakra.span>
           </Button>
         </Box>
     </Flex>

@@ -14,7 +14,7 @@ import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { Path } from '../../../core/router/paths';
 import { LoginFormInitialValues, UserType } from '../types';
 import { Form, Formik, FormikHelpers } from 'formik';
-import { TextInput } from '../../../components/TextInput';
+import { TextInput } from '../../../components/input/TextInput';
 import { useBackgroundColor } from '../utils';
 import authStore from '../../../store/auth';
 import { loginUserApi } from '../../../api/auth/api';
@@ -36,7 +36,7 @@ export const LoginPage: FC = observer(() => {
         helpers.resetForm();
         if(res?.status === 200) {
           authStore.setUser(res.data.member);
-          authStore.setTokenToLocalStorage(res.data.userToken);
+          authStore.setTokenToLocalStorage(res.data.userToken, res.data.member);
           history.push('/main')
         } else {
           errorToast('Wrong user data, please try again!');
