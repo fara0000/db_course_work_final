@@ -1,4 +1,4 @@
-const domainUrl = 'http://localhost:8080';
+const domainUrl = 'https://virtual-synagogue.herokuapp.com';
 
 export const loginUserUrl = `${domainUrl}/login`;
 export const registerUserUrl = `${domainUrl}/register`;

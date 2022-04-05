@@ -1,4 +1,4 @@
-#multistage building
+# multistage building
 # Build stage
 FROM maven:3.8.4-jdk-11-slim AS build
 COPY src /app/src

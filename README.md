@@ -45,4 +45,4 @@ The synagogue is also determined by belonging to a certain tradition (community)
 
 ## 📈 Data logical diagram of db (model):
 
-<img width="700" src="./docs/Datalogicalmodel.jpg" alt="cli output"/>
+<img width="700" src="./docs/Datalogicalmodel.jpg" alt="oops"/>
