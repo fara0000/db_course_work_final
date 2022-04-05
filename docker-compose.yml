@@ -1,4 +1,17 @@
 version: "3.0"
 services:
-    backend:
-      image: backend
+#    backend:
+#      image: backend
+#      environment:
+#        - PORT=1111
+#        - DATABASE_HOST=192.168.2.89:5432
+#        - DATABASE_NAME=faradb
+#        - DATABASE_USERNAME=fara0000
+#        - DATABASE_PASSWORD=SGJc3Jzi
+
+    frontend:
+      image: frontend
+      ports:
+      - 3000:3000
+#      depends_on:
+#        - backend
