@@ -57,7 +57,7 @@ export const RegistrationPage = observer(() => {
           minH={'100vh'}
           align={'center'}
           justify={'center'}
-          bg={useBackgroundColor('gray.50', 'gray.800')}
+          bg={'#FFF'}
         >
           <Stack spacing={8} mx={'auto'} maxW={'lg'} pb="40px" px={6}>
             <Stack align={'center'} mb="8px">

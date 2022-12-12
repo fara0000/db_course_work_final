@@ -28,6 +28,7 @@ export const TableContent: FC<Props<object>> = (props) => {
     }
 
     useEffect(() => {
+        // @ts-ignore
         setRenderColumns(columns?.map((item: any) => (
           <Column
             key={item.key}

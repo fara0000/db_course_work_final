@@ -60,7 +60,7 @@ export const LoginPage: FC = observer(() => {
     >
       {({ isSubmitting, dirty, isValid, values }) => (
         <Flex
-          bg={bg1}
+          bg={'#FFF'}
           minH={'100vh'}
           align={'center'}
           justify={'center'}
