@@ -27,7 +27,7 @@ export const App = observer(() => {
     if(jwt) {
       authStore.setIsAuthorized(true);
     }
-  }, [jwt])
+  }, [jwt]);
 
   return isAuthorized ? (
       <BrowserRouter>
