@@ -6,10 +6,10 @@ on:
   pull_request:
     branches: [ main ]
 
-#set environment variables
+# set environment variables
 env:
-  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  APP_NAME: ${{ 'virtual-synagogue' }}
+  HEROKU_API_KEY: f4830efd-5603-45f8-a7f7-fb06580bf827
+  APP_NAME: 'virtual-synagogue'
 
 jobs:
 
