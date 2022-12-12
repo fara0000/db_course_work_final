@@ -75,5 +75,4 @@ The synagogue is also determined by belonging to a certain tradition (community)
 
 * Ссылка на отчёт со всеми
   итерациями: [док](https://docs.google.com/document/d/1H1Ckhq3smYMT3suzJZdiZCK506NQSWS3hTVGZbzkCUM/edit#heading=h.p2wjcjmstir6).
-* Ссылка на видео:
-  1: [видео](https://drive.google.com/drive/folders/1rNF57aA9vkhd_tTotyfgaqpkSX4e_qQc?hl=ru).
+* Ссылка на видео: [видео](https://drive.google.com/drive/folders/1rNF57aA9vkhd_tTotyfgaqpkSX4e_qQc?hl=ru).
